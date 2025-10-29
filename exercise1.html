@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1 - Educational Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>Exercise 1: Montage d'un interferomètre de Michelson</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 25%"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <form id="quizForm" class="quiz-form">
+                
+                <!-- Question 1: Multiple Choice -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <span class="question-type">Multiple Choice</span>
+                    </div>
+                    <h3 class="question-text">Quelle source de lumière a été utilisée dans cette expérience ?</h3>
+                    
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a" required>
+                            <span class="option-text">Une lampe sodium</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            <span class="option-text">Une LED</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span class="option-text">Un laser à ion d'Argon</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            <span class="option-text">Une lampe halogène</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2: Open Text -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <span class="question-type">Multiple Choice</span>
+                    </div>
+                    <h3 class="question-text">Quel élément optique a été utilisé pour séparer le faisceau lumineux en deux.</h3>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a" required>
+                            <span class="option-text">Une lentille convergente</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            <span class="option-text">Un miroir plan</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            <span class="option-text">Un miroir semi-réfléchissant</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            <span class="option-text">Une lame compensatrice</span>
+                        </label>
+                    </div>
+                </div>
+
+                 <!-- Question 2: Open Text -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <span class="question-type">Multiple Choice</span>
+                    </div>
+                    <h3 class="question-text">La lame semi-réfléchissante d’un Michelson doit être placée :</h3>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a" required>
+                            <span class="option-text">Perpendiculairement au faisceau incident</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            <span class="option-text">À 45° par rapport au faisceau incident</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            <span class="option-text">Parallèlement à un des miroirs</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            <span class="option-text">À 90° du miroir mobile</span>
+                        </label>
+                    </div>
+                </div>
+                
+
+                 <!-- Question 4: Multiple Choice -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <span class="question-type"></span>
+                    </div>
+                    <h3 class="question-text"> Pourquoi utilise-t-on souvent une lentille convergente devant la source de lumière :</h3>
+                    
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a" required>
+                            <span class="option-text">Pour réduire la divergence du faisceau.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            <span class="option-text">Pour colorer le faisceau</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            <span class="option-text">Pour modifier la distance optique du rayon de lumière recombiné.</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            <span class="option-text">Pour augmenter la cohérence de la lumière</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Exercise 1</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get group ID from sessionStorage
+            const groupId = sessionStorage.getItem('groupId') || 'unknown';
+            
+            // Store answers in sessionStorage
+            const formData = new FormData(this);
+            const answers = {
+                groupId: groupId,
+                exercise: 1,
+                timestamp: new Date().toISOString(),
+                q1: formData.get('q1'),
+                q2: formData.get('q2'),
+                q3: formData.get('q3'),
+                q4: formData.get('q4')
+            };
+
+            sessionStorage.setItem('exercise1Answers', JSON.stringify(answers));
+
+            // Download JSON file locally
+            const jsonString = JSON.stringify(answers, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${groupId}-exercise1Answers.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Redirect to correction page
+            window.location.href = 'correction1.html';
+
+        });
+    </script>
+</body>
+</html>

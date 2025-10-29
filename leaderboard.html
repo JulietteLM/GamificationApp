@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Experiment Leaderboard</title>
+  <style>
+    :root{
+      --bg:#1b0330;--panel:#2b0b45;--accent:#ff8a00;--accent-2:#7c3aed;--text:#fff;
+    }
+    body{margin:0;font-family:Inter, sans-serif;background:linear-gradient(180deg,var(--bg),#240229 120%);color:var(--text)}
+    .screen{display:none}
+    .active{display:block}
+    .app{max-width:1200px;margin:28px auto;padding:24px;border-radius:18px;background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06));box-shadow:0 10px 30px rgba(11,7,23,0.6)}
+    header{display:flex;justify-content:space-between;align-items:center}
+    h1{margin:0;font-size:22px}
+    .subtitle{color:rgba(255,255,255,0.65);font-size:13px}
+    button{background:linear-gradient(90deg,var(--accent-2),var(--accent));border:none;color:#12010b;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text)}
+    .layout{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-top:18px}
+    .leaderboard{background:rgba(255,255,255,0.05);padding:12px;border-radius:12px;min-height:640px;position:relative}
+    .team-row{display:flex;align-items:center;gap:16px;padding:10px 14px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:16px}
+    .rank-circle{width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);border:1px solid rgba(255,255,255,0.04)}
+    .team-name{flex:1;text-align:left;padding-left:6px}
+    .movement{width:24px;text-align:center;font-size:15px;color:rgba(255,255,255,0.85)}
+    .highlight{background:linear-gradient(90deg,rgba(255,138,0,0.16),rgba(124,58,237,0.12));box-shadow:0 6px 18px rgba(124,58,237,0.06)}
+    .sidebar{padding:12px;background:rgba(255,255,255,0.03);border-radius:12px}
+    .rankings-nav button{margin:6px 0;display:block;width:100%}
+    .params{cursor:pointer;margin-left:8px}
+    .muted{color:rgba(255,255,255,0.6);font-size:13px}
+    .mini-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
+    .mini-board{background:rgba(255,255,255,0.05);padding:10px;border-radius:10px}
+    .mini-board h4{text-align:center;margin:0 0 8px 0}
+    .mini-board .team-row{padding:6px 8px;font-size:13px;margin-bottom:4px}
+    .mini-board .rank-circle{width:24px;height:24px;font-size:12px}
+  </style>
+</head>
+<body>
+  <!-- Screen 1: Experimenter -->
+  <div id="screen1" class="screen active">
+    <div class="app">
+      <h1>Experiment Setup</h1>
+      <p>Select condition:</p>
+      <label><input type="radio" name="cond" value="H" checked> High-rank (H)</label>
+      <label><input type="radio" name="cond" value="L"> Low-rank (L)</label>
+      <br><br>
+      <button id="startBtn">Start Experiment</button>
+    </div>
+  </div>
+
+  <!-- Screen 2: Leaderboard -->
+  <div id="screen2" class="screen">
+    <div class="app">
+      <header>
+        <div>
+          <h1>Leaderboard <span id="paramIcon" class="params">⚙️</span></h1>
+          <div class="subtitle">30 teams • 4 exercises </div>
+        </div>
+        <button id="showAllBtn" class="ghost">Show all ranks</button>
+      </header>
+
+      <div class="controls" style="margin:16px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input id="teamName" type="text" placeholder="Enter new team name" style="padding:8px;border-radius:8px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06)">
+        <button id="addBtn">Add team</button>
+        <button id="rankBtn">First rank</button>
+        <button id="nextBtn" class="ghost">Next rank</button>
+        <div style="margin-left:auto" class="muted">Round: <span id="roundDisplay">0</span>/4</div>
+      </div>
+
+      <div class="layout">
+        <section class="leaderboard" id="list"></section>
+        <aside class="sidebar">
+          <h3>All Teams</h3>
+          <div id="allTeams"></div>
+          <h3 style="margin-top:12px">Past Rankings</h3>
+          <div class="rankings-nav">
+            <button data-round="1">See 1st exercise</button>
+            <button data-round="2">See 2nd exercise</button>
+            <button data-round="3">See 3rd exercise</button>
+            <button data-round="4">See 4th exercise</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 3: All Ranks -->
+  <div id="screen3" class="screen">
+    <div class="app">
+      <header>
+        <div>
+          <h1>All Rankings</h1>
+          <div class="subtitle">Overview of all 4 exercises</div>
+        </div>
+        <button id="backBtn" class="ghost">⬅ Back</button>
+      </header>
+      <div id="miniBoards" class="mini-boards"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  function makeId(){return 't'+Math.random().toString(36).slice(2,9)}
+  function rand(min,max){return Math.random()*(max-min)+min}
+  function randi(min,max){return Math.floor(rand(min,max+1))}
+
+  const randomNames=["Orion","Phoenix","Nebula","Starlight","Eclipse","Aurora","Zenith","Vortex","Nova","Comet","Mirage","Blaze","Falcon","Hydra","Titan","Pegasus","Lyra","Draco","Gemini","Vega","Sirius","Atlas","Apollo","Helios","Icarus","Luna","Cosmos","Galaxy","Solstice","Specter","Zephyr"];
+
+  const MAX_TEAMS=30, ROUNDS=4;
+  const forcedRanks={ H:[5,3,6,2], L:[26,30,24,28] };
+
+  let teams=[], condition='H', round=0, userTeamId=null, history={};
+  let leaderboardVisible=false; 
+  let lastPositions = {}; 
+
+  const s1=document.getElementById('screen1');
+  const s2=document.getElementById('screen2');
+  const s3=document.getElementById('screen3');
+  const list=document.getElementById('list');
+  const allTeamsEl=document.getElementById('allTeams');
+  const teamInput=document.getElementById('teamName');
+  const addBtn=document.getElementById('addBtn');
+  const rankBtn=document.getElementById('rankBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const paramIcon=document.getElementById('paramIcon');
+  const roundDisplay=document.getElementById('roundDisplay');
+  const showAllBtn=document.getElementById('showAllBtn');
+  const backBtn=document.getElementById('backBtn');
+  const miniBoards=document.getElementById('miniBoards');
+
+  function seedTeams(){
+    teams=[];
+    for(let i=0;i<MAX_TEAMS;i++){
+      const name=randomNames[Math.floor(Math.random()*randomNames.length)] + ' ' + (randi(10,99));
+      teams.push({id:makeId(), name, score: randi(900,1400)});
+    }
+  }
+
+  function sortedCopy(arr){ return [...arr].sort((a,b)=>b.score - a.score || a.name.localeCompare(b.name)); }
+
+  function renderBoard(showRound=null){
+    const prevRects = {}; Array.from(list.children).forEach(node=>{ prevRects[node.dataset.id] = node.getBoundingClientRect(); });
+    list.innerHTML = '';
+    if(!leaderboardVisible && !showRound) return;
+
+    let display;
+    if(showRound && history[showRound]) display = history[showRound];
+    else display = sortedCopy(teams);
+
+    display.forEach((t,i)=>{
+      const movement = (lastPositions[t.id]!==undefined) ? (lastPositions[t.id] > i ? '▲' : (lastPositions[t.id] < i ? '▼' : '')) : '';
+      const row = document.createElement('div');
+      row.className = 'team-row' + (t.id === userTeamId ? ' highlight' : '');
+      row.dataset.id = t.id;
+      row.innerHTML = `<div class="rank-circle">${i+1}</div><div class="team-name">${t.name}</div><div class="movement">${movement}</div>`;
+      list.appendChild(row);
+    });
+
+    Array.from(list.children).forEach((node, i)=>{ lastPositions[node.dataset.id] = i; });
+  }
+
+  function applyRanking(){
+    if(round >= ROUNDS) return;
+
+    // shift scores randomly for all teams
+    teams.forEach(t=>{ t.score += randi(-40,40); });
+    let newSorted = sortedCopy(teams);
+
+    // Force user team to exact ranks
+    if(userTeamId){
+      const forcedRank = forcedRanks[condition][round]-1; // 0-based
+      const withoutUser = newSorted.filter(x=>x.id!==userTeamId);
+      withoutUser.splice(forcedRank,0,teams.find(x=>x.id===userTeamId));
+      newSorted = withoutUser;
+    }
+
+    // Update team scores to preserve order
+    newSorted.forEach((t,i)=>{ t.score = 2000 - i*10; });
+
+    round++;
+    history[round] = newSorted.map(t=>({id:t.id, name:t.name, score:t.score}));
+    leaderboardVisible = true;
+    renderBoard();
+    roundDisplay.textContent = round;
+    if(round === 1) rankBtn.disabled = true;
+    if(round > 0) nextBtn.disabled = false;
+    if(round >= ROUNDS) nextBtn.disabled = true;
+  }
+
+  document.getElementById('startBtn').onclick = ()=>{
+    condition = document.querySelector('input[name=cond]:checked').value;
+    seedTeams(); renderSidebar(); renderBoard();
+    s1.classList.remove('active'); s2.classList.add('active');
+  };
+
+  function renderSidebar(){
+    allTeamsEl.innerHTML = '';
+    teams.forEach(t=>{
+      const div = document.createElement('div');
+      div.textContent = t.name + (t.id===userTeamId? ' *' : '');
+      allTeamsEl.appendChild(div);
+    });
+  }
+
+  addBtn.onclick = ()=>{
+    const name = (teamInput.value || '').trim() || (randomNames[Math.floor(Math.random()*randomNames.length)] + ' ' + randi(10,99));
+    const newTeam = { id: makeId(), name, score: 1200 };
+    teams.push(newTeam);
+    userTeamId = newTeam.id;
+    renderSidebar(); renderBoard();
+    teamInput.value = '';
+  };
+
+  rankBtn.onclick = ()=> applyRanking();
+  nextBtn.onclick = ()=> applyRanking();
+  paramIcon.onclick = ()=> alert('Condition: ' + (condition==='H' ? 'High-rank (H)' : 'Low-rank (L)'));
+
+  document.querySelectorAll('.rankings-nav button').forEach(btn=>{
+    btn.onclick = ()=>{
+      const r = parseInt(btn.getAttribute('data-round'));
+      if(history[r]){
+        const prev = history[r-1] || null;
+        lastPositions = {};
+        if(prev){ prev.forEach((t,i)=> lastPositions[t.id] = i); }
+        list.innerHTML='';
+        history[r].forEach((t,i)=>{
+          const movement = (lastPositions[t.id]!==undefined) ? (lastPositions[t.id] > i ? '▲' : (lastPositions[t.id] < i ? '▼' : '')) : '';
+          const row = document.createElement('div');
+          row.className = 'team-row' + (t.id===userTeamId?' highlight':'');
+          row.dataset.id = t.id;
+          row.innerHTML = `<div class="rank-circle">${i+1}</div><div class="team-name">${t.name}</div><div class="movement">${movement}</div>`;
+          list.appendChild(row);
+        });
+      }
+    };
+  });
+
+  showAllBtn.onclick = ()=>{
+    miniBoards.innerHTML = '';
+    for(let r=1;r<=ROUNDS;r++){
+      const div=document.createElement('div');
+      div.className='mini-board';
+      div.innerHTML=`<h4>Exercise ${r}</h4>`;
+      if(history[r]){
+        history[r].forEach((t,i)=>{
+          const row=document.createElement('div');
+          row.className='team-row'+(t.id===userTeamId?' highlight':'');
+          row.innerHTML=`<div class=\"rank-circle\">${i+1}</div><div class=\"team-name\">${t.name}</div>`;
+          div.appendChild(row);
+        });
+      }
+      miniBoards.appendChild(div);
+    }
+    s2.classList.remove('active'); s3.classList.add('active');
+  };
+
+  backBtn.onclick = ()=>{ s3.classList.remove('active'); s2.classList.add('active'); };
+
+  seedTeams(); renderSidebar();
+})();
+</script>
+</body>
+</html>

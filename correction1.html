@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1 Correction - Educational Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>Exercise 1: Correction & Feedback</h1>
+        </header>
+
+        <main class="main-content">
+            <div class="score-card" id="scoreCard">
+                <h2>Your Score</h2>
+                <div class="score-display">
+                    <span class="score-number" id="scoreNumber">0</span>
+                    <span class="score-total">/ 4</span>
+                </div>
+                <p class="score-message" id="scoreMessage"></p>
+            </div>
+
+            <!-- Question 1 Correction -->
+            <div class="correction-card" id="correction1">
+                <div class="correction-header">
+                    <span class="question-number">Question 1</span>
+                    <span class="result-badge" id="result1"></span>
+                </div>
+                <h3 class="question-text">Quelle source de lumière a été utilisée dans cette expérience ?</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <span id="userAnswer1"></span>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <span>A - Une lampe sodium</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p> La lampe sodium est une source de lumière thermique reconnaissable à sa couleur jaune dû à sa longueur d’onde.</p>
+                </div>
+            </div>
+
+            <!-- Question 2 Correction -->
+            <div class="correction-card" id="correction2">
+                <div class="correction-header">
+                    <span class="question-number">Question 2</span>
+                    <span class="result-badge" id="result2"></span>
+                </div>
+                <h3 class="question-text"> Quel élément est utilisé pour séparer le faisceau lumineux en deux ?</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <p id="userAnswer2" class="text-answer-display"></p>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <p>C- Un miroir semi-réfléchissant.</p>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p> Un miroir est dit “semi-réfléchissant” si il a la capacité de réfléchir et réfracter la lumière incidente selon un certain ratio (habituellement 50/50).</p>
+                </div>
+            </div>
+
+            <!-- Question 3 Correction -->
+            <div class="correction-card" id="correction3">
+                <div class="correction-header">
+                    <span class="question-number">Question 3</span>
+                    <span class="result-badge" id="result3"></span>
+                </div>
+                <h3 class="question-text">La lame semi-réfléchissante d’un Michelson doit être placée :</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <span id="userAnswer3"></span>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <span>B - À 45° par rapport au faisceau incident.</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p>La lumière réfractée par une lame semi-réfléchissante est perpendiculaire à la lumière incidente.</p>
+                </div>
+            </div>
+
+            <!-- Question 4 Correction -->
+            <div class="correction-card" id="correction4">
+                <div class="correction-header">
+                    <span class="question-number">Question 4</span>
+                    <span class="result-badge" id="result4"></span>
+                </div>
+                <h3 class="question-text">Dans un montage réel, l’image des franges est généralement observée :</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <span id="userAnswer4"></span>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <span>A - Pour réduire la divergence du faisceau.</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p>The CSS property "color" is used to change the text color of an element. Properties like "text-color" or "font-color" do not exist in CSS. The color property accepts various formats including color names, hex codes, RGB, and HSL values.</p>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="exercise2.html" class="next-exercise-btn">Continue to Exercise 2 →</a>
+<!--                <a href="index.html" class="home-btn">Back to Home</a>-->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Retrieve answers from sessionStorage
+        const answers = JSON.parse(sessionStorage.getItem('exercise1Answers') || '{}');
+        
+        // Correct answers
+        const correctAnswers = {
+            q1: 'a',
+            q2: 'c',
+            q3: 'b',
+            q4: 'a'
+        };
+
+        // Answer labels
+        const answerLabels = {
+            q1: {
+                a: 'A - Une lampe sodium',
+                b: 'B - Une LED',
+                c: 'C - Un laser à ion Argon',
+                d: 'D - Une lampe halogène'
+            },
+            q2: {
+                a: 'A - Une lentille convergente',
+                b: 'B - Un miroir plan',
+                c: 'C - Un miroir semi-réfléchissant',
+                d: 'D - Une lame compensatrice'
+            },
+            q3: {
+                a: 'A - Perpendiculairement au faisceau incident',
+                b: 'B - À 45° par rapport au faisceau incident',
+                c: 'C - Parallèlement à un des miroirs',
+                d: 'D - À 90° du miroir mobile'
+            },
+            q4: {
+                a: 'A - Pour réduire la divergence du faisceau.',
+                b: 'B - Pour colorer le faisceau',
+                c: 'C - Pour modifier la distance optique du rayon de lumière recombiné',
+                d: 'D - Pour augmenter la cohérence de la lumière'
+            }
+        };
+
+        // Calculate score
+        let score = 0;
+        
+        // Check Q1
+        if (answers.q1 === correctAnswers.q1) {
+            score++;
+            document.getElementById('result1').textContent = '✓ Correct';
+            document.getElementById('result1').classList.add('correct');
+            document.getElementById('correction1').classList.add('correct');
+        } else {
+            document.getElementById('result1').textContent = '✗ Incorrect';
+            document.getElementById('result1').classList.add('incorrect');
+            document.getElementById('correction1').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer1').textContent = answerLabels.q1[answers.q1] || 'No answer';
+
+        // Check Q2
+        if (answers.q2 === correctAnswers.q2) {
+            score++;
+            document.getElementById('result2').textContent = '✓ Correct';
+            document.getElementById('result2').classList.add('correct');
+            document.getElementById('correction2').classList.add('correct');
+        } else {
+            document.getElementById('result2').textContent = '✗ Incorrect';
+            document.getElementById('result2').classList.add('incorrect');
+            document.getElementById('correction2').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer2').textContent = answerLabels.q1[answers.q1] || 'No answer';
+
+
+        // Check Q3
+        if (answers.q3 === correctAnswers.q3) {
+            score++;
+            document.getElementById('result3').textContent = '✓ Correct';
+            document.getElementById('result3').classList.add('correct');
+            document.getElementById('correction3').classList.add('correct');
+        } else {
+            document.getElementById('result3').textContent = '✗ Incorrect';
+            document.getElementById('result3').classList.add('incorrect');
+            document.getElementById('correction3').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer3').textContent = answerLabels.q3[answers.q3] || 'No answer';
+
+        // Check Q4
+        if (answers.q4 === correctAnswers.q4) {
+            score++;
+            document.getElementById('result4').textContent = '✓ Correct';
+            document.getElementById('result4').classList.add('correct');
+            document.getElementById('correction4').classList.add('correct');
+        } else {
+            document.getElementById('result4').textContent = '✗ Incorrect';
+            document.getElementById('result4').classList.add('incorrect');
+            document.getElementById('correction4').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer4').textContent = answerLabels.q4[answers.q4] || 'No answer';
+
+        // Display score
+        document.getElementById('scoreNumber').textContent = score;
+        
+        const scoreMessage = document.getElementById('scoreMessage');
+        if (score === 4) {
+            scoreMessage.textContent = 'Perfect! Excellent work!';
+            scoreMessage.style.color = '#4ade80';
+        } else if (score >= 2) {
+            scoreMessage.textContent = 'Good job! Review the explanations below.';
+            scoreMessage.style.color = '#fbbf24';
+        } else {
+            scoreMessage.textContent = 'Keep practicing! Review the material carefully.';
+            scoreMessage.style.color = '#f87171';
+        }
+    </script>
+</body>
+</html>

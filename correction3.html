@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 3 Correction - Educational Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>Exercise 3: Correction & Feedback</h1>
+        </header>
+
+        <main class="main-content">
+            <div class="score-card" id="scoreCard">
+                <h2>Your Score</h2>
+                <div class="score-display">
+                    <span class="score-number" id="scoreNumber">0</span>
+                    <span class="score-total">/ 4</span>
+                </div>
+                <p class="score-message" id="scoreMessage"></p>
+            </div>
+
+            <div class="correction-card" id="correction1">
+                <div class="correction-header">
+                    <span class="question-number">Question 1</span>
+                    <span class="result-badge">Reviewed</span>
+                </div>
+                <h3 class="question-text">Explain the concept of responsive web design and why it's important.</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <p id="userAnswer1" class="text-answer-display"></p>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Expected answer:</strong>
+                        <p>Responsive web design is an approach that makes web pages render well on different devices and screen sizes. It uses flexible layouts, flexible images, and media queries to adapt the design. It's important because users access websites from various devices (phones, tablets, desktops), and a responsive design ensures a good user experience across all platforms.</p>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p>With the proliferation of mobile devices, responsive design has become essential. It improves user experience, helps with SEO rankings, and reduces maintenance costs by having one website that works everywhere instead of separate mobile and desktop versions.</p>
+                </div>
+            </div>
+
+            <div class="correction-card" id="correction2">
+                <div class="correction-header">
+                    <span class="question-number">Question 2</span>
+                    <span class="result-badge" id="result2"></span>
+                </div>
+                <h3 class="question-text">Which CSS unit is relative to the viewport width?</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <span id="userAnswer2"></span>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <span>C - vw</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p>The "vw" unit stands for viewport width. 1vw equals 1% of the viewport's width. This makes it perfect for creating responsive designs that scale with the browser window. Similarly, "vh" represents viewport height.</p>
+                </div>
+            </div>
+
+            <div class="correction-card" id="correction3">
+                <div class="correction-header">
+                    <span class="question-number">Question 3</span>
+                    <span class="result-badge" id="result3"></span>
+                </div>
+                <h3 class="question-text">Which image shows a proper CSS Grid layout with 3 columns?</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <span id="userAnswer3"></span>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <span>Option B</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p>CSS Grid allows you to create two-dimensional layouts. A 3-column grid can be created using "grid-template-columns: 1fr 1fr 1fr" or "repeat(3, 1fr)". Option B correctly shows three equal columns arranged horizontally.</p>
+                </div>
+            </div>
+
+            <div class="correction-card" id="correction4">
+                <div class="correction-header">
+                    <span class="question-number">Question 4</span>
+                    <span class="result-badge" id="result4"></span>
+                </div>
+                <h3 class="question-text">What is the purpose of media queries in CSS?</h3>
+                
+                <div class="answer-section">
+                    <div class="your-answer">
+                        <strong>Your answer:</strong>
+                        <span id="userAnswer4"></span>
+                    </div>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong>
+                        <span>B - To apply styles based on device characteristics</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <strong>Explanation:</strong>
+                    <p>Media queries allow you to apply CSS styles conditionally based on device characteristics like screen width, height, orientation, or resolution. They are fundamental to responsive web design, enabling different layouts for mobile, tablet, and desktop devices.</p>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="exercise4.html" class="next-exercise-btn">Continue to Exercise 4 →</a>
+<!--                <a href="index.html" class="home-btn">Back to Home</a>-->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const answers = JSON.parse(sessionStorage.getItem('exercise3Answers') || '{}');
+        
+        const correctAnswers = {
+            q2: 'c',
+            q3: 'b',
+            q4: 'b'
+        };
+
+        const answerLabels = {
+            q2: {
+                a: 'A - em',
+                b: 'B - rem',
+                c: 'C - vw',
+                d: 'D - px'
+            },
+            q3: {
+                a: 'Option A',
+                b: 'Option B',
+                c: 'Option C'
+            },
+            q4: {
+                a: 'A - To add animations',
+                b: 'B - To apply styles based on device characteristics',
+                c: 'C - To import external stylesheets',
+                d: 'D - To create variables'
+            }
+        };
+
+        let score = 0;
+        
+        // Display Q1
+        document.getElementById('userAnswer1').textContent = answers.q1 || 'No answer provided';
+
+        // Check Q2
+        if (answers.q2 === correctAnswers.q2) {
+            score++;
+            document.getElementById('result2').textContent = '✓ Correct';
+            document.getElementById('result2').classList.add('correct');
+            document.getElementById('correction2').classList.add('correct');
+        } else {
+            document.getElementById('result2').textContent = '✗ Incorrect';
+            document.getElementById('result2').classList.add('incorrect');
+            document.getElementById('correction2').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer2').textContent = answerLabels.q2[answers.q2] || 'No answer';
+
+        // Check Q3
+        if (answers.q3 === correctAnswers.q3) {
+            score++;
+            document.getElementById('result3').textContent = '✓ Correct';
+            document.getElementById('result3').classList.add('correct');
+            document.getElementById('correction3').classList.add('correct');
+        } else {
+            document.getElementById('result3').textContent = '✗ Incorrect';
+            document.getElementById('result3').classList.add('incorrect');
+            document.getElementById('correction3').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer3').textContent = answerLabels.q3[answers.q3] || 'No answer';
+
+        // Check Q4
+        if (answers.q4 === correctAnswers.q4) {
+            score++;
+            document.getElementById('result4').textContent = '✓ Correct';
+            document.getElementById('result4').classList.add('correct');
+            document.getElementById('correction4').classList.add('correct');
+        } else {
+            document.getElementById('result4').textContent = '✗ Incorrect';
+            document.getElementById('result4').classList.add('incorrect');
+            document.getElementById('correction4').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer4').textContent = answerLabels.q4[answers.q4] || 'No answer';
+
+        // Display score
+        document.getElementById('scoreNumber').textContent = score;
+        
+        const scoreMessage = document.getElementById('scoreMessage');
+        if (score === 4) {
+            scoreMessage.textContent = 'Perfect! Excellent work!';
+            scoreMessage.style.color = '#4ade80';
+        } else if (score >= 2) {
+            scoreMessage.textContent = 'Good job! Review the explanations below.';
+            scoreMessage.style.color = '#fbbf24';
+        } else {
+            scoreMessage.textContent = 'Keep practicing! Review the material carefully.';
+            scoreMessage.style.color = '#f87171';
+        }
+    </script>
+</body>
+</html>

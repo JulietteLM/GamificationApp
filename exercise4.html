@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 4 - Educational Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>Exercise 4: Comprehensive Review</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <form id="quizForm" class="quiz-form">
+                
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <span class="question-type">Multiple Choice</span>
+                    </div>
+                    <h3 class="question-text">Which HTML5 semantic element should be used for the main content of a document?</h3>
+                    
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a" required>
+                            <span class="option-text">&lt;section&gt;</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            <span class="option-text">&lt;main&gt;</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span class="option-text">&lt;article&gt;</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            <span class="option-text">&lt;div&gt;</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <span class="question-type">Image Selection</span>
+                    </div>
+                    <h3 class="question-text">Which color scheme represents good contrast for accessibility?</h3>
+                    
+                    <div class="image-options">
+                        <label class="image-option">
+                            <input type="radio" name="q2" value="a" required>
+                            <div class="image-container">
+                                <img src="/placeholder.svg?height=150&width=200" alt="Option A">
+                                <span class="image-label">Option A</span>
+                            </div>
+                        </label>
+                        <label class="image-option">
+                            <input type="radio" name="q2" value="b">
+                            <div class="image-container">
+                                <img src="/placeholder.svg?height=150&width=200" alt="Option B">
+                                <span class="image-label">Option B</span>
+                            </div>
+                        </label>
+                        <label class="image-option">
+                            <input type="radio" name="q2" value="c">
+                            <div class="image-container">
+                                <img src="/placeholder.svg?height=150&width=200" alt="Option C">
+                                <span class="image-label">Option C</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <span class="question-type">Open Answer</span>
+                    </div>
+                    <h3 class="question-text">List and briefly explain three best practices for writing clean, maintainable CSS code.</h3>
+                    
+                    <textarea 
+                        name="q3" 
+                        class="text-answer" 
+                        placeholder="Type your answer here..."
+                        rows="6"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <span class="question-type">Multiple Choice</span>
+                    </div>
+                    <h3 class="question-text">What is the correct way to link an external CSS file in HTML?</h3>
+                    
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a" required>
+                            <span class="option-text">&lt;style src="styles.css"&gt;</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            <span class="option-text">&lt;link rel="stylesheet" href="styles.css"&gt;</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            <span class="option-text">&lt;css href="styles.css"&gt;</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            <span class="option-text">&lt;stylesheet&gt;styles.css&lt;/stylesheet&gt;</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <span class="question-type">Multiple Choice</span>
+                    </div>
+                    <h3 class="question-text">Which CSS property controls the stacking order of positioned elements?</h3>
+                    
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a" required>
+                            <span class="option-text">layer</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            <span class="option-text">z-index</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            <span class="option-text">stack-order</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            <span class="option-text">position-order</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <span class="question-type">Open Answer</span>
+                    </div>
+                    <h3 class="question-text">Describe a scenario where you would use CSS Grid instead of Flexbox, and explain why.</h3>
+                    
+                    <textarea 
+                        name="q6" 
+                        class="text-answer" 
+                        placeholder="Type your answer here..."
+                        rows="5"
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Exercise 4</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get group ID from sessionStorage
+            const groupId = sessionStorage.getItem('groupId') || 'unknown';
+
+            // Store answers in sessionStorage
+            const formData = new FormData(this);
+            const answers = {
+                groupId: groupId,
+                exercise: 1,
+                timestamp: new Date().toISOString(),
+                q1: formData.get('q1'),
+                q2: formData.get('q2'),
+                q3: formData.get('q3'),
+                q4: formData.get('q4')
+            };
+
+            sessionStorage.setItem('exercise1Answers', JSON.stringify(answers));
+
+            // Download JSON file locally
+            const jsonString = JSON.stringify(answers, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${groupId}-exercise4Answers.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Redirect to correction page
+            window.location.href = 'correction4.html';
+
+        });
+    </script>
+
+</body>
+</html>
