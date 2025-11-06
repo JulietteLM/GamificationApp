@@ -8,43 +8,31 @@
     :root{
       --bg:#1b0330;--panel:#2b0b45;--accent:#ff8a00;--accent-2:#7c3aed;--text:#fff;
     }
-    body{margin:0;font-family:Inter, sans-serif;background:linear-gradient(180deg,var(--bg),#240229 120%);color:var(--text);overflow:hidden}
+    body{margin:0;font-family:Inter, sans-serif;background:linear-gradient(180deg,var(--bg),#240229 120%);color:var(--text)}
     .screen{display:none}
     .active{display:block}
-    /* Reduced padding and made container fit viewport height */
-    .app{max-width:100%;height:100vh;margin:0 auto;padding:16px;border-radius:0;background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06));box-shadow:0 10px 30px rgba(11,7,23,0.6);display:flex;flex-direction:column}
-    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    h1{margin:0;font-size:20px}
-    .subtitle{color:rgba(255,255,255,0.65);font-size:12px}
-    button{background:linear-gradient(90deg,var(--accent-2),var(--accent));border:none;color:#12010b;padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
+    .app{max-width:1200px;margin:28px auto;padding:24px;border-radius:18px;background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06));box-shadow:0 10px 30px rgba(11,7,23,0.6)}
+    header{display:flex;justify-content:space-between;align-items:center}
+    h1{margin:0;font-size:22px}
+    .subtitle{color:rgba(255,255,255,0.65);font-size:13px}
+    button{background:linear-gradient(90deg,var(--accent-2),var(--accent));border:none;color:#12010b;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
     button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text)}
-    /* Adjusted layout to use more horizontal space and removed sidebar */
-    .layout{display:grid;grid-template-columns:1fr 220px;gap:12px;flex:1;overflow:hidden}
-    /* Made leaderboard use CSS columns for 2-column layout and removed min-height */
-    .leaderboard{background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;width :80%;margin-left : 15%; position: relative;overflow:auto;column-count:1;column-gap:12px}
-    /* Reduced padding, margins, and font size for compact display */
-    .team-row{display:flex;align-items:center;gap:10px;padding:4px 8px;border-radius:6px;margin-bottom:3px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:13px;break-inside:avoid}
-    /* Made rank circles smaller */
-    .rank-circle{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:12px;flex-shrink:0}
-    .team-name{flex:1;text-align:left;padding-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .movement{width:20px;text-align:center;font-size:13px;color:rgba(255,255,255,0.85);flex-shrink:0}
-    .highlight{background:linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37));box-shadow:0 6px 18px rgba(124, 58, 237, 0.23)
-    }
-    /* Made sidebar more compact */
-    .sidebar{padding:8px;background:rgba(255,255,255,0.03);border-radius:12px;overflow:auto;display:flex;flex-direction:column}
-    .sidebar h3{font-size:14px;margin:0 0 6px 0}
-    .rankings-nav button{margin:4px 0;display:block;width:100%;font-size:12px;padding:5px 8px}
+    .layout{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-top:18px}
+    .leaderboard{background:rgba(255,255,255,0.05);padding:12px;border-radius:12px;min-height:640px;position:relative}
+    .team-row{display:flex;align-items:center;gap:16px;padding:10px 14px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:16px}
+    .rank-circle{width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);border:1px solid rgba(255,255,255,0.04)}
+    .team-name{flex:1;text-align:left;padding-left:6px}
+    .movement{width:24px;text-align:center;font-size:15px;color:rgba(255,255,255,0.85)}
+    .highlight{background:linear-gradient(90deg,rgba(255,138,0,0.16),rgba(124,58,237,0.12));box-shadow:0 6px 18px rgba(124,58,237,0.06)}
+    .sidebar{padding:12px;background:rgba(255,255,255,0.03);border-radius:12px}
+    .rankings-nav button{margin:6px 0;display:block;width:100%}
     .params{cursor:pointer;margin-left:8px}
-    .muted{color:rgba(255,255,255,0.6);font-size:12px}
-    /* Adjusted controls to be more compact */
-    .controls{margin:8px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-    .controls input{padding:6px;border-radius:8px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);font-size:13px}
+    .muted{color:rgba(255,255,255,0.6);font-size:13px}
     .mini-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
     .mini-board{background:rgba(255,255,255,0.05);padding:10px;border-radius:10px}
     .mini-board h4{text-align:center;margin:0 0 8px 0}
     .mini-board .team-row{padding:6px 8px;font-size:13px;margin-bottom:4px}
     .mini-board .rank-circle{width:24px;height:24px;font-size:12px}
-    #allTeams{font-size:11px;line-height:1.6;max-height:200px;overflow:auto}
   </style>
 </head>
 <body>
@@ -71,8 +59,8 @@
         <button id="showAllBtn" class="ghost">Show all ranks</button>
       </header>
 
-      <div class="controls">
-        <input id="teamName" type="text" placeholder="Enter new team name">
+      <div class="controls" style="margin:16px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input id="teamName" type="text" placeholder="Enter new team name" style="padding:8px;border-radius:8px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06)">
         <button id="addBtn">Add team</button>
         <button id="rankBtn">First rank</button>
         <button id="nextBtn" class="ghost">Next rank</button>
@@ -118,8 +106,8 @@
 
   const randomNames=["Orion","Phoenix","Nebula","Starlight","Eclipse","Aurora","Zenith","Vortex","Nova","Comet","Mirage","Blaze","Falcon","Hydra","Titan","Pegasus","Lyra","Draco","Gemini","Vega","Sirius","Atlas","Apollo","Helios","Icarus","Luna","Cosmos","Galaxy","Solstice","Specter","Zephyr"];
 
-  const MAX_TEAMS=24, ROUNDS=4;
-  const forcedRanks={ H:[5,3,6,2], L:[19,24,17,22] };
+  const MAX_TEAMS=30, ROUNDS=4;
+  const forcedRanks={ H:[5,3,6,2], L:[26,30,24,28] };
 
   let teams=[], condition='H', round=0, userTeamId=null, history={};
   let leaderboardVisible=false; 
