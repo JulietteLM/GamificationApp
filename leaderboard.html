@@ -53,8 +53,8 @@
     <div class="app">
       <h1>Experiment Setup</h1>
       <p>Select condition:</p>
-      <label><input type="radio" name="cond" value="H" checked> High-rank (H)</label>
-      <label><input type="radio" name="cond" value="L"> Low-rank (L)</label>
+      <label><input type="radio" name="cond" value="H" checked> (H)</label>
+      <label><input type="radio" name="cond" value="L"> (L)</label>
       <br><br>
       <button id="startBtn">Start Experiment</button>
     </div>
@@ -66,7 +66,7 @@
       <header>
         <div>
           <h1>Leaderboard <span id="paramIcon" class="params">⚙️</span></h1>
-          <div class="subtitle">30 teams • 4 exercises </div>
+          <div class="subtitle">24 teams • 4 exercises </div>
         </div>
         <button id="showAllBtn" class="ghost">Show all ranks</button>
       </header>
@@ -116,7 +116,7 @@
   function rand(min,max){return Math.random()*(max-min)+min}
   function randi(min,max){return Math.floor(rand(min,max+1))}
 
-  const randomNames=["Orion","Phoenix","Nebula","Starlight","Eclipse","Aurora","Zenith","Vortex","Nova","Comet","Mirage","Blaze","Falcon","Hydra","Titan","Pegasus","Lyra","Draco","Gemini","Vega","Sirius","Atlas","Apollo","Helios","Icarus","Luna","Cosmos","Galaxy","Solstice","Specter","Zephyr"];
+  const randomNames=["Les Renardes Pourpres","Les Louves Saphir","Les Serpents d’Ivoire","Les Abeilles Ambrées","Les Biches Lavande","Les Guépards Ambre","Les Serpentes d’Obsidienne","Les Panthères Aigue-marine","Les Corneilles Prunes","Les Renards Dorés","Les Aiglonnes Neige","Les Loutres d’Argile","Les Fauves Opalins","Les Hirondelles Céruléennes","Les Lynx Pourpres","Les Dauphines de Topaze","Les Coqs Grenat","Les Oursonnes de Jade","Les Oursins de Nacre","Les Pingouins Obsidien","Les Cerfs de Cristal","Les Lynx Sauge","Les Paons Saphirés"];
 
   const MAX_TEAMS=24, ROUNDS=4;
   const forcedRanks={ H:[5,3,6,2], L:[19,24,17,22] };
@@ -143,7 +143,7 @@
   function seedTeams(){
     teams=[];
     for(let i=0;i<MAX_TEAMS;i++){
-      const name=randomNames[Math.floor(Math.random()*randomNames.length)] + ' ' + (randi(10,99));
+      const name=randomNames[Math.floor(Math.random()*randomNames.length)] ;
       teams.push({id:makeId(), name, score: randi(900,1400)});
     }
   }
@@ -225,7 +225,7 @@
 
   rankBtn.onclick = ()=> applyRanking();
   nextBtn.onclick = ()=> applyRanking();
-  paramIcon.onclick = ()=> alert('Condition: ' + (condition==='H' ? 'High-rank (H)' : 'Low-rank (L)'));
+  paramIcon.onclick = ()=> alert('Condition: ' + (condition==='H' ? '(H)' : '(L)'));
 
   document.querySelectorAll('.rankings-nav button').forEach(btn=>{
     btn.onclick = ()=>{
