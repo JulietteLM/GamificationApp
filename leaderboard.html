@@ -23,7 +23,7 @@
     /* Made leaderboard use CSS columns for 2-column layout and removed min-height */
     .leaderboard{background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;width :80%;margin-left : 15%; position: relative;overflow:auto;column-count:1;column-gap:12px}
     /* Reduced padding, margins, and font size for compact display */
-    .team-row{display:flex;align-items:center;gap:10px;padding:4px 8px;border-radius:6px;margin-bottom:3px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:13px;break-inside:avoid}
+    .team-row{display:flex;align-items:center;gap:10px;padding:13px 8px;border-radius:6px;margin-bottom:3px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:13px;break-inside:avoid}
     /* Made rank circles smaller */
     .rank-circle{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:12px;flex-shrink:0}
     .team-name{flex:1;text-align:left;padding-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -66,7 +66,7 @@
       <header>
         <div>
           <h1>Leaderboard <span id="paramIcon" class="params">⚙️</span></h1>
-          <div class="subtitle">24 teams • 4 exercises </div>
+          <div class="subtitle"> • 4 exercises </div>
         </div>
         <button id="showAllBtn" class="ghost">Show all ranks</button>
       </header>
@@ -116,10 +116,12 @@
   function rand(min,max){return Math.random()*(max-min)+min}
   function randi(min,max){return Math.floor(rand(min,max+1))}
 
-  const randomNames=["Les Renardes Pourpres","Les Louves Saphir","Les Serpents d’Ivoire","Les Abeilles Ambrées","Les Biches Lavande","Les Guépards Ambre","Les Serpentes d’Obsidienne","Les Panthères Aigue-marine","Les Corneilles Prunes","Les Renards Dorés","Les Aiglonnes Neige","Les Loutres d’Argile","Les Fauves Opalins","Les Hirondelles Céruléennes","Les Lynx Pourpres","Les Dauphines de Topaze","Les Coqs Grenat","Les Oursonnes de Jade","Les Oursins de Nacre","Les Pingouins Obsidien","Les Cerfs de Cristal","Les Lynx Sauge","Les Paons Saphirés"];
+  const randomNames=["Les Louves Saphir","Les Serpents d’Ivoire","Les Abeilles Ambrées","Les Biches Lavande","Les Guépards Ambre","Les Serpentes d’Obsidienne","Les Panthères Aigue-marine","Les Corneilles Prunes","Les Renards Dorés","Les Aiglonnes Neige","Les Loutres d’Argile","Les Fauves Opalins","Les Hirondelles Céruléennes","Les Lynx Pourpres","Les Dauphines de Topaze","Les Coqs Grenat","Les Oursonnes de Jade","Les Oursins de Nacre","Les Pingouins Obsidien","Les Cerfs de Cristal","Les Lynx Sauge","Les Paons Saphirés"];
 
-  const MAX_TEAMS=24, ROUNDS=4;
-  const forcedRanks={ H:[5,3,6,2], L:[19,24,17,22] };
+  const MAX_TEAMS=12, ROUNDS=4;
+  //const forcedRanks={ H:[5,3,6,2], L:[19,24,17,22] };
+  const forcedRanks={ H:[5,3,4,2], L:[11,9,12,10] };
+
 
   let teams=[], condition='H', round=0, userTeamId=null, history={};
   let leaderboardVisible=false; 
