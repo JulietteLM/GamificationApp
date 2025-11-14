@@ -26,9 +26,9 @@
             <div class="correction-card" id="correction1">
                 <div class="correction-header">
                     <span class="question-number">Question 1</span>
-                    <span class="result-badge">Reviewed</span>
+                   <span class="result-badge" id="result1"></span>
                 </div>
-                <h3 class="question-text">Explain the concept of responsive web design and why it's important.</h3>
+                <h3 class="question-text">Si les miroirs ne sont pas parfaitement perpendiculaires à la lame semi-réfléchissante, la figure d’interférences sera:</h3>
                 
                 <div class="answer-section">
                     <div class="your-answer">
@@ -37,13 +37,13 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Expected answer:</strong>
-                        <p>Responsive web design is an approach that makes web pages render well on different devices and screen sizes. It uses flexible layouts, flexible images, and media queries to adapt the design. It's important because users access websites from various devices (phones, tablets, desktops), and a responsive design ensures a good user experience across all platforms.</p>
+                        <p>C -Formée de franges rectilignes.</p>
                     </div>
                 </div>
                 
                 <div class="explanation">
                     <strong>Explanation:</strong>
-                    <p>With the proliferation of mobile devices, responsive design has become essential. It improves user experience, helps with SEO rankings, and reduces maintenance costs by having one website that works everywhere instead of separate mobile and desktop versions.</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@
                     <span class="question-number">Question 2</span>
                     <span class="result-badge" id="result2"></span>
                 </div>
-                <h3 class="question-text">Which CSS unit is relative to the viewport width?</h3>
+                <h3 class="question-text">Le déplacement d’une frange correspond à:</h3>
                 
                 <div class="answer-section">
                     <div class="your-answer">
@@ -61,13 +61,13 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Correct answer:</strong>
-                        <span>C - vw</span>
+                        <span>B - Une variation de la longueur du chemin optique.</span>
                     </div>
                 </div>
                 
                 <div class="explanation">
                     <strong>Explanation:</strong>
-                    <p>The "vw" unit stands for viewport width. 1vw equals 1% of the viewport's width. This makes it perfect for creating responsive designs that scale with the browser window. Similarly, "vh" represents viewport height.</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
                     <span class="question-number">Question 3</span>
                     <span class="result-badge" id="result3"></span>
                 </div>
-                <h3 class="question-text">Which image shows a proper CSS Grid layout with 3 columns?</h3>
+                <h3 class="question-text">Selon vous, quelle configuration ci-dessous permet d'obtenir des franges d'interférences rectilignes?</h3>
                 
                 <div class="answer-section">
                     <div class="your-answer">
@@ -85,13 +85,13 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Correct answer:</strong>
-                        <span>Option B</span>
+                        <span>B - Option B</span>
                     </div>
                 </div>
                 
                 <div class="explanation">
                     <strong>Explanation:</strong>
-                    <p>CSS Grid allows you to create two-dimensional layouts. A 3-column grid can be created using "grid-template-columns: 1fr 1fr 1fr" or "repeat(3, 1fr)". Option B correctly shows three equal columns arranged horizontally.</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
                     <span class="question-number">Question 4</span>
                     <span class="result-badge" id="result4"></span>
                 </div>
-                <h3 class="question-text">What is the purpose of media queries in CSS?</h3>
+                <h3 class="question-text">Obtenir des franges d'interférences rectilignes nécessite de manipuler:</h3>
                 
                 <div class="answer-section">
                     <div class="your-answer">
@@ -109,13 +109,13 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Correct answer:</strong>
-                        <span>B - To apply styles based on device characteristics</span>
+                        <span>A - La rotation horizontale du Miroir en rotation.</span>
                     </div>
                 </div>
                 
                 <div class="explanation">
                     <strong>Explanation:</strong>
-                    <p>Media queries allow you to apply CSS styles conditionally based on device characteristics like screen width, height, orientation, or resolution. They are fundamental to responsive web design, enabling different layouts for mobile, tablet, and desktop devices.</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -130,17 +130,24 @@
         const answers = JSON.parse(sessionStorage.getItem('exercise3Answers') || '{}');
         
         const correctAnswers = {
-            q2: 'c',
+            q1: 'c',
+            q2: 'b',
             q3: 'b',
-            q4: 'b'
+            q4: 'a'
         };
 
         const answerLabels = {
+            q1: {
+                a: 'A - Uniforme.',
+                b: 'B - Formée de franges circulaires.',
+                c: 'C - Formée de franges rectilignes.',
+                d: 'D - Totalement absente.'
+            },
             q2: {
-                a: 'A - em',
-                b: 'B - rem',
-                c: 'C - vw',
-                d: 'D - px'
+                a: "A - Une modification de la longueur d'onde de la source.",
+                b: 'B - Une variation de la longueur du chemin optique.',
+                c: 'C - Une variation d’intensité de la source lumineuse.',
+                d: 'D - Une interférence destructive totale.'
             },
             q3: {
                 a: 'Option A',
@@ -148,17 +155,27 @@
                 c: 'Option C'
             },
             q4: {
-                a: 'A - To add animations',
-                b: 'B - To apply styles based on device characteristics',
-                c: 'C - To import external stylesheets',
-                d: 'D - To create variables'
+                a: 'A - La rotation horizontale du Miroir en rotation.',
+                b: 'B - La rotation verticale du Miroir en rotation.',
+                c: "C - La longueur d'onde de la source.",
+                d: 'D - Les deux axes de rotations du Miroir en rotation.'
             }
         };
 
         let score = 0;
         
-        // Display Q1
-        document.getElementById('userAnswer1').textContent = answers.q1 || 'No answer provided';
+          // Check Q1
+        if (answers.q1 === correctAnswers.q1) {
+            score++;
+            document.getElementById('result1').textContent = '✓ Correct';
+            document.getElementById('result1').classList.add('correct');
+            document.getElementById('correction1').classList.add('correct');
+        } else {
+            document.getElementById('result1').textContent = '✗ Incorrect';
+            document.getElementById('result1').classList.add('incorrect');
+            document.getElementById('correction1').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer1').textContent = answerLabels.q1[answers.q1] || 'No answer';;
 
         // Check Q2
         if (answers.q2 === correctAnswers.q2) {

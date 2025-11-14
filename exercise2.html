@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 2 - Educational Quiz</title>
+    <title>Exercise 2 -Interferomètre de Michelson en lame d'air</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -32,21 +32,21 @@
                             <input type="radio" name="q1" value="a" required>
                             <div class="image-container">
                                 <img src="media/Ex1_Q4_A.png" alt="Option A">
-                                <span class="image-label">Option A</span>
+                                <span class="image-label">A - Option A</span>
                             </div>
                         </label>
                         <label class="image-option">
                             <input type="radio" name="q1" value="b">
                             <div class="image-container">
                                 <img src="media/Ex1_Q4_B.png" alt="Option B">
-                                <span class="image-label">Option B</span>
+                                <span class="image-label">B - Option B</span>
                             </div>
                         </label>
                         <label class="image-option">
                             <input type="radio" name="q1" value="c">
                             <div class="image-container">
                                 <img src="media/Ex1_Q4_C.png" alt="Option C">
-                                <span class="image-label">Option C</span>
+                                <span class="image-label">C - Option C</span>
                             </div>
                         </label>
                     </div>
@@ -63,19 +63,19 @@
                     <div class="options">
                         <label class="option">
                             <input type="radio" name="q2" value="a" required>
-                            <span class="option-text">Ajuster la différence de marche entre les deux bras.</span>
+                            <span class="option-text">A - Ajuster la différence de marche entre les deux bras.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q2" value="b">
-                            <span class="option-text">Modifier la couleur des franges.</span>
+                            <span class="option-text">B - Modifier la couleur des franges.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q2" value="c">
-                            <span class="option-text">Supprimer les réflexions parasites.</span>
+                            <span class="option-text">C - Supprimer les réflexions parasites.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q2" value="d">
-                            <span class="option-text">Centrer la figure d’interférences.</span>
+                            <span class="option-text">D - Centrer la figure d’interférences.</span>
                         </label>
                     </div>
                 </div>
@@ -91,19 +91,19 @@
                     <div class="options">
                         <label class="option">
                             <input type="radio" name="q3" value="a" required>
-                            <span class="option-text">À l’œil nu, en visée directe.</span>
+                            <span class="option-text">A - À l’œil nu, en visée directe.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q3" value="b">
-                            <span class="option-text">À travers une lentille ou sur un écran placé au foyer d’une lentille.</span>
+                            <span class="option-text">B - À travers une lentille ou sur un écran placé au foyer d’une lentille.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q3" value="c">
-                            <span class="option-text">Sur un miroir semi-transparent.</span>
+                            <span class="option-text">C - Sur un miroir semi-transparent.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q3" value="d">
-                            <span class="option-text">À l’arrière de la source uniquement.</span>
+                            <span class="option-text">D - À l’arrière de la source uniquement.</span>
                         </label>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                 q4: formData.get('q4')
             };
 
-            sessionStorage.setItem('exercise1Answers', JSON.stringify(answers));
+            sessionStorage.setItem('exercise2Answers', JSON.stringify(answers));
 
             // Download JSON file locally
             const jsonString = JSON.stringify(answers, null, 2);

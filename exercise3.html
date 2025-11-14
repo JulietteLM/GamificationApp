@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 3 - Educational Quiz</title>
+    <title>Exercise 3 - Interferomètre de Michelson en coin d'air</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,19 +30,19 @@
                     <div class="options">
                         <label class="option">
                             <input type="radio" name="q1" value="a" required>
-                            <span class="option-text">Uniforme</span>
+                            <span class="option-text">A - Uniforme.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q1" value="b">
-                            <span class="option-text">Formée de franges circulaires</span>
+                            <span class="option-text">B - Formée de franges circulaires.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q1" value="c">
-                            <span class="option-text">Formée de franges rectilignes</span>
+                            <span class="option-text">C - Formée de franges rectilignes.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q1" value="d">
-                            <span class="option-text">Totalement absente</span>
+                            <span class="option-text">D - Totalement absente.</span>
                         </label>
                     </div>
                 </div>
@@ -58,19 +58,19 @@
                     <div class="options">
                         <label class="option">
                             <input type="radio" name="q2" value="a" required>
-                            <span class="option-text">Une modification de la longueur d'onde de la source.</span>
+                            <span class="option-text">A - Une modification de la longueur d'onde de la source.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q2" value="b">
-                            <span class="option-text">Une variation de la longueur du chemin optique.</span>
+                            <span class="option-text">B - Une variation de la longueur du chemin optique.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q2" value="c">
-                            <span class="option-text">Une variation d’intensité de la source lumineuse.</span>
+                            <span class="option-text">C - Une variation d’intensité de la source lumineuse.</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="q2" value="d">
-                            <span class="option-text">Une interférence destructive totale.</span>
+                            <span class="option-text">D - Une interférence destructive totale.</span>
                         </label>
                     </div>
                 </div>
@@ -82,28 +82,28 @@
                         <span class="question-number">Question 3</span>
                         <span class="question-type">Image Selection</span>
                     </div>
-                    <h3 class="question-text">Selon vous, quelle configuration ci-dessous permet d'obtenir des franges d'interferences rectilignes</h3>
+                    <h3 class="question-text">Selon vous, quelle configuration ci-dessous permet d'obtenir des franges d'interferences rectilignes? </h3>
                     
                     <div class="image-options">
                         <label class="image-option">
                             <input type="radio" name="q3" value="a" required>
                             <div class="image-container">
                                 <img src="media/Ex2_Q3_A.png" alt="Option A">
-                                <span class="image-label">Option A</span>
+                                <span class="image-label">A - Option A</span>
                             </div>
                         </label>
                         <label class="image-option">
                             <input type="radio" name="q3" value="b">
                             <div class="image-container">
                                 <img src="media/Ex2_Q3_B.png" alt="Option B">
-                                <span class="image-label">Option B</span>
+                                <span class="image-label">B - Option B</span>
                             </div>
                         </label>
                         <label class="image-option">
                             <input type="radio" name="q3" value="c">
                             <div class="image-container">
                                 <img src="media/Ex2_Q3_C.png" alt="Option C">
-                                <span class="image-label">Option C</span>
+                                <span class="image-label">C - Option C</span>
                             </div>
                         </label>
                     </div>
@@ -115,24 +115,24 @@
                         <span class="question-number">Question 4</span>
                         <span class="question-type">Multiple Choice</span>
                     </div>
-                    <h3 class="question-text"> Obtenir des franges verticales nécessite de manipuler : </h3>
+                    <h3 class="question-text"> Obtenir des franges d'interférences rectilignes nécessite de manipuler: </h3>
                     
                     <div class="options">
                         <label class="option">
-                            <input type="radio" name="q2" value="a" required>
-                            <span class="option-text">La rotation horizontale du Miroir en rotation.</span>
+                            <input type="radio" name="q4" value="a" required>
+                            <span class="option-text">A - La rotation horizontale du Miroir en rotation.</span>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q2" value="b">
-                            <span class="option-text">La rotation verticale du Miroir en rotation.</span>
+                            <input type="radio" name="q4" value="b">
+                            <span class="option-text">B - La rotation verticale du Miroir en rotation.</span>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q2" value="c">
-                            <span class="option-text">La translation du Miroir en translation.</span>
+                            <input type="radio" name="q4" value="c">
+                            <span class="option-text">C - La longueur d'onde de la source.</span>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q2" value="d">
-                            <span class="option-text">Une interférence destructive totale.</span>
+                            <input type="radio" name="q4" value="d">
+                            <span class="option-text">D - Les deux axes de rotations du Miroir en rotation.</span>
                         </label>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                 q4: formData.get('q4')
             };
 
-            sessionStorage.setItem('exercise1Answers', JSON.stringify(answers));
+            sessionStorage.setItem('exercise3Answers', JSON.stringify(answers));
 
             // Download JSON file locally
             const jsonString = JSON.stringify(answers, null, 2);

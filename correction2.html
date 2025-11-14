@@ -18,7 +18,7 @@
                 <h2>Your Score</h2>
                 <div class="score-display">
                     <span class="score-number" id="scoreNumber">0</span>
-                    <span class="score-total">/ 5</span>
+                    <span class="score-total">/ 4</span>
                 </div>
                 <p class="score-message" id="scoreMessage"></p>
             </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Correct answer:</strong>
-                        <span>B - Option B </span>
+                        <span>A - Option A</span>
                     </div>
                 </div>
                 
@@ -61,20 +61,20 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Correct answer:</strong>
-                        <span>Ajuster la différence de marche entre les deux bras</span>
+                        <span>A - Ajuster la différence de marche entre les deux bras.</span>
                     </div>
                 </div>
                 
                 <div class="explanation">
                     <strong>Explanation:</strong>
-                    <p>The justify-content: space-between property in Flexbox distributes items evenly with the first item at the start and the last item at the end. This creates equal spacing between items while pushing the first and last items to the edges.</p>
+                    <p></p>
                 </div>
             </div>
 
             <div class="correction-card" id="correction3">
                 <div class="correction-header">
                     <span class="question-number">Question 3</span>
-                    <span class="result-badge">Reviewed</span>
+                    <span class="result-badge" id ="result3"></span>
                 </div>
                 <h3 class="question-text">Selon vous, quelle configuration ci-dessous permet d'obtenir des franges d'intereferences rectilignes.</h3>
                 
@@ -85,13 +85,13 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Expected answer:</strong>
-                        <p> Option A</p>
+                        <p>B - À travers une lentille ou sur un écran placé au foyer d’une lentille.</p>
                     </div>
                 </div>
                 
                 <div class="explanation">
-                    <strong>Explanation:</strong>
-                    <p>Each method has its use case. Inline CSS is quick but not reusable. Internal CSS is good for single-page styles. External CSS is best for maintaining consistent styles across multiple pages and is the most commonly used method in production.</p>
+                    <strong></strong>
+                    <p></p>
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
                     <span class="question-number">Question 4</span>
                     <span class="result-badge" id="result4"></span>
                 </div>
-                <h3 class="question-text">Which CSS selector has the highest specificity?</h3>
+                <h3 class="question-text">Si les miroirs sont parfaitement perpendiculaires à la lame séparatrice, la figure d’interférences sera :</h3>
                 
                 <div class="answer-section">
                     <div class="your-answer">
@@ -109,39 +109,16 @@
                     </div>
                     <div class="correct-answer">
                         <strong>Correct answer:</strong>
-                        <span>C - ID selector (#id)</span>
+                        <span>B - Formée de franges circulaires.</span>
                     </div>
                 </div>
                 
                 <div class="explanation">
                     <strong>Explanation:</strong>
-                    <p>In CSS specificity hierarchy (excluding inline styles and !important), ID selectors have the highest specificity, followed by class selectors, then element selectors. The universal selector (*) has the lowest specificity.</p>
+                    <p></p>
                 </div>
             </div>
 
-            <div class="correction-card" id="correction5">
-                <div class="correction-header">
-                    <span class="question-number">Question 5</span>
-                    <span class="result-badge" id="result5"></span>
-                </div>
-                <h3 class="question-text">What is the default position value for HTML elements?</h3>
-                
-                <div class="answer-section">
-                    <div class="your-answer">
-                        <strong>Your answer:</strong>
-                        <span id="userAnswer5"></span>
-                    </div>
-                    <div class="correct-answer">
-                        <strong>Correct answer:</strong>
-                        <span>C - static</span>
-                    </div>
-                </div>
-                
-                <div class="explanation">
-                    <strong>Explanation:</strong>
-                    <p>The default position value is "static", which means elements are positioned according to the normal document flow. Other position values (relative, absolute, fixed, sticky) remove elements from the normal flow or change their positioning behavior.</p>
-                </div>
-            </div>
 
             <div class="navigation-buttons">
                 <a href="transition2.html" class="next-exercise-btn"> Next →</a>
@@ -154,35 +131,35 @@
         const answers = JSON.parse(sessionStorage.getItem('exercise2Answers') || '{}');
         
         const correctAnswers = {
-            q1: 'b',
-            q2: 'b',
-            q4: 'c',
-            q5: 'c'
+            q1: 'a',
+            q2: 'a',
+            q3: 'b',
+            q4: 'b'
         };
 
         const answerLabels = {
             q1: {
-                a: 'A - Computer Style Sheets',
-                b: 'B - Cascading Style Sheets',
-                c: 'C - Creative Style Sheets',
-                d: 'D - Colorful Style Sheets'
+                a: 'A - Option A',
+                b: 'B - Option B',
+                c: 'C - Option C'
             },
             q2: {
-                a: 'Option A',
-                b: 'Option B',
-                c: 'Option C'
+                a: 'A - Ajuster la différence de marche entre les deux bras.',
+                b: 'B - Modifier la couleur des franges.',
+                c: 'C - Supprimer les réflexions parasites.',
+                d: 'D - Centrer la figure d’interférences.'
+            },
+            q3: {
+                a: 'A - À l’œil nu, en visée directe.',
+                b: 'B - À travers une lentille ou sur un écran placé au foyer d’une lentille.',
+                c: 'C - Sur un miroir semi-transparent.',
+                d: 'D -  À l’arrière de la source uniquement.'
             },
             q4: {
-                a: 'A - Element selector (p)',
-                b: 'B - Class selector (.class)',
-                c: 'C - ID selector (#id)',
-                d: 'D - Universal selector (*)'
-            },
-            q5: {
-                a: 'A - relative',
-                b: 'B - absolute',
-                c: 'C - static',
-                d: 'D - fixed'
+                a: 'A - Uniforme.',
+                b: 'B - Formée de franges circulaires.',
+                c: 'C - Formée de franges rectilignes.',
+                d: 'D - Totalement absente.'
             }
         };
 
@@ -214,8 +191,19 @@
         }
         document.getElementById('userAnswer2').textContent = answerLabels.q2[answers.q2] || 'No answer';
 
-        // Display Q3
-        document.getElementById('userAnswer3').textContent = answers.q3 || 'No answer provided';
+
+        // Check Q3
+        if (answers.q3 === correctAnswers.q3) {
+            score++;
+            document.getElementById('result3').textContent = '✓ Correct';
+            document.getElementById('result3').classList.add('correct');
+            document.getElementById('correction3').classList.add('correct');
+        } else {
+            document.getElementById('result3').textContent = '✗ Incorrect';
+            document.getElementById('result3').classList.add('incorrect');
+            document.getElementById('correction3').classList.add('incorrect');
+        }
+        document.getElementById('userAnswer3').textContent = answerLabels.q3[answers.q3] || 'No answer';
 
         // Check Q4
         if (answers.q4 === correctAnswers.q4) {
@@ -230,27 +218,15 @@
         }
         document.getElementById('userAnswer4').textContent = answerLabels.q4[answers.q4] || 'No answer';
 
-        // Check Q5
-        if (answers.q5 === correctAnswers.q5) {
-            score++;
-            document.getElementById('result5').textContent = '✓ Correct';
-            document.getElementById('result5').classList.add('correct');
-            document.getElementById('correction5').classList.add('correct');
-        } else {
-            document.getElementById('result5').textContent = '✗ Incorrect';
-            document.getElementById('result5').classList.add('incorrect');
-            document.getElementById('correction5').classList.add('incorrect');
-        }
-        document.getElementById('userAnswer5').textContent = answerLabels.q5[answers.q5] || 'No answer';
 
         // Display score
         document.getElementById('scoreNumber').textContent = score;
         
         const scoreMessage = document.getElementById('scoreMessage');
-        if (score === 5) {
+        if (score === 4) {
             scoreMessage.textContent = 'Perfect! Outstanding performance!';
             scoreMessage.style.color = '#4ade80';
-        } else if (score >= 3) {
+        } else if (score >= 2) {
             scoreMessage.textContent = 'Good job! Review the explanations below.';
             scoreMessage.style.color = '#fbbf24';
         } else {
