@@ -42,8 +42,8 @@
     .mini-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
     .mini-board{background:rgba(255,255,255,0.05);padding:10px;border-radius:10px}
     .mini-board h4{text-align:center;margin:0 0 8px 0}
-    .mini-board .team-row{padding:5px 7px;font-size:13px;margin-bottom:4px}
-    .mini-board .rank-circle{width:22px;height:24px;font-size:12px}
+    .mini-board .team-row{padding:6px 8px;font-size:13px;margin-bottom:4px}
+    .mini-board .rank-circle{width:24px;height:24px;font-size:12px}
     #allTeams{font-size:11px;line-height:1.6;max-height:200px;overflow:auto}
   </style>
 </head>
@@ -82,8 +82,8 @@
       <div class="layout">
         <section class="leaderboard" id="list"></section>
         <aside class="sidebar">
-<!--          <h3>All Teams</h3>-->
-<!--          <div id="allTeams"></div>-->
+          <h3>All Teams</h3>
+          <div id="allTeams"></div>
           <h3 style="margin-top:12px">Past Rankings</h3>
           <div class="rankings-nav">
             <button data-round="1">See 1st exercise</button>
@@ -142,13 +142,34 @@
   const backBtn=document.getElementById('backBtn');
   const miniBoards=document.getElementById('miniBoards');
 
-  function seedTeams(){
-    teams=[];
-    for(let i=0;i<MAX_TEAMS;i++){
-      const name=randomNames[Math.floor(Math.random()*randomNames.length)] ;
-      teams.push({id:makeId(), name, score: randi(900,1400)});
+  // function seedTeams(){
+  //   teams=[];
+  //   for(let i=0;i<MAX_TEAMS;i++){
+  //     const name=randomNames[Math.floor(Math.random()*randomNames.length)] ;
+  //     teams.push({id:makeId(), name, score: randi(900,1400)});
+  //   }
+  // }
+
+  function seedTeams() {
+    teams = [];
+    const availableNames = [...randomNames]; // copie de la liste
+
+    for (let i = 0; i < MAX_TEAMS; i++) {
+      if (availableNames.length === 0) {
+        throw new Error("Pas assez de noms pour générer toutes les équipes !");
+      }
+
+      const index = Math.floor(Math.random() * availableNames.length);
+      const name = availableNames.splice(index, 1)[0]; // retire le nom
+
+      teams.push({
+        id: makeId(),
+        name,
+        score: randi(900, 1400)
+      });
     }
   }
+
 
   function sortedCopy(arr){ return [...arr].sort((a,b)=>b.score - a.score || a.name.localeCompare(b.name)); }
 
