@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Result - Educational Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Votre Classement</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="score-card">
+                <h2>Résultat de l'exercice</h2>
+                <div class="ranking-display">
+                    <!-- Display ranking from sessionStorage based on condition -->
+                    <p class="ranking-text">Vous êtes <span id="rankText">--</span> sur <span id="totalText">--</span></p>
+                </div>
+                <p class="ranking-message" id="rankingMessage"></p>
+            </div>
+
+            <div class="ranking-info-card">
+                <h3>Prochaine étape</h3>
+                <p>Cliquez sur le bouton ci-dessous pour accéder au classement général et voir votre progression</p>
+            </div>
+
+            <div class="navigation-buttons">
+                <!-- Button now redirects to leaderboard.html -->
+                <a href="leaderboard.html" class="next-exercise-btn">Suivant - Accéder au Classement →</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData') || '{}');
+            const currentExercise = leaderboardData.currentExercise || 1;
+            const rank = leaderboardData.currentRank || 1;
+            const totalTeams = leaderboardData.totalTeams || 13;
+            
+            // Update progress bar
+            const progressPercent = (currentExercise / 4) * 100;
+            document.getElementById('progressBar').style.width = progressPercent + '%';
+            
+            // Update ranking display
+            document.getElementById('rankText').textContent = rank;
+            document.getElementById('totalText').textContent = totalTeams;
+            
+            // Update message based on ranking
+            const rankingMessage = document.getElementById('rankingMessage');
+            if (rank === 1) {
+                rankingMessage.textContent = 'Excellent! Vous êtes en première place! 🥇';
+                rankingMessage.style.color = '#fbbf24';
+            } else if (rank <= 5) {
+                rankingMessage.textContent = 'Très bien! Vous êtes dans le top 5! 🎉';
+                rankingMessage.style.color = '#4ade80';
+            } else if (rank <= 8) {
+                rankingMessage.textContent = 'Bon travail! Continuez vos efforts! 💪';
+                rankingMessage.style.color = '#60a5fa';
+            } else {
+                rankingMessage.textContent = 'Vous pouvez mieux faire! Persévérez! 📚';
+                rankingMessage.style.color = '#f87171';
+            }
+        });
+    </script>
+</body>
+</html>

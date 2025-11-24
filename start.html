@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Condition - Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Course Assessment Quiz</h1>
+            <p class="subtitle">Step 1 - Select your condition</p>
+        </header>
+
+        <main class="main-content">
+            <div class="condition-card">
+                <h2>Select Your Condition</h2>
+                <p>Choose one of the following conditions before starting the quiz:</p>
+                
+                <div class="condition-options">
+                    <label class="condition-option">
+                        <input type="radio" name="condition" value="H" checked>
+                        <div class="condition-box">
+                            <div class="condition-title">Condition H</div>
+                            <p>High difficulty mode</p>
+                        </div>
+                    </label>
+                    <label class="condition-option">
+                        <input type="radio" name="condition" value="L">
+                        <div class="condition-box">
+                            <div class="condition-title">Condition L</div>
+                            <p>Low difficulty mode</p>
+                        </div>
+                    </label>
+                </div>
+
+                <button class="btn-submit" onclick="selectCondition()">Next</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function selectCondition() {
+            const condition = document.querySelector('input[name="condition"]:checked').value;
+            sessionStorage.setItem('condition', condition);
+            window.location.href = 'team-name.html';
+        }
+
+        // Load saved condition if exists
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = sessionStorage.getItem('condition');
+            if (saved) {
+                document.querySelector(`input[value="${saved}"]`).checked = true;
+            }
+        });
+    </script>
+</body>
+</html>
