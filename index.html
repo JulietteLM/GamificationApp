@@ -9,41 +9,30 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>Course Assessment Quiz</h1>
-            <p class="subtitle">Complete all 4 exercises to test your knowledge</p>
+            <h1>Course Quiz</h1>
         </header>
 
         <main class="main-content">
 
-            <!-- Added group ID input field -->
-            <div class="group-id-section">
-                <label for="groupId" class="group-id-label">Enter Your Group ID:</label>
-                <input
-                        type="text"
-                        id="groupId"
-                        class="group-id-input"
-                        placeholder="e.g., Group-A1"
-                        required
-                >
-                <p class="group-id-note">Please enter your group ID before starting the exercises</p>
-                <button class="btn-submit" onclick="saveGroupId()"> Submit Group Id</button>
-            </div>
-            <!-- </CHANGE> -->
+<!--            &lt;!&ndash; Added group ID input field &ndash;&gt;-->
+<!--            <div class="group-id-section">-->
+<!--                <label for="groupId" class="group-id-label">Enter Your Group ID:</label>-->
+<!--                <input-->
+<!--                        type="text"-->
+<!--                        id="groupId"-->
+<!--                        class="group-id-input"-->
+<!--                        placeholder="e.g., Group-A1"-->
+<!--                        required-->
+<!--                >-->
+<!--                <p class="group-id-note">Please enter your group ID before starting the exercises</p>-->
+<!--                <button class="btn-submit" onclick="saveGroupId()"> Submit Group Id</button>-->
+<!--            </div>-->
 
-            <div class="welcome-card">
-                <h2>Welcome to Your Quiz</h2>
-                <p>This assessment contains 4 exercises covering key topics from the course. Each exercise includes multiple questions that will test your understanding.</p>
-                
-                <div class="instructions">
-                    <h3>Instructions:</h3>
-                    <ul>
-                        <li>Complete each exercise in order</li>
-                        <li>Answer all questions before submitting</li>
-                        <li>You'll receive immediate feedback after each exercise</li>
-                        <li>Review the explanations to understand correct answers</li>
-                    </ul>
-                </div>
+            <div class="info-banner">
+                <p><strong>Team:</strong> <span id="teamDisplay"></span></p>
+<!--                <p><strong>Condition:</strong> <span id="conditionDisplay"></span></p>-->
             </div>
+
 
             <div class="exercises-grid">
                 <a href="exercise1.html" class="exercise-card">
@@ -82,31 +71,67 @@
                     View Leaderboard
                 </a>
             </div>
+
+
+            <div class="corrections-section">
+                <h2>Answer Keys</h2>
+                <div class="corrections-grid">
+                    <a href="correction1.html" class="btn-correction">
+                        <span class="correction-icon">📋</span>
+                        Exercise 1 Correction
+                    </a>
+                    <a href="correction2.html" class="btn-correction">
+                        <span class="correction-icon">📋</span>
+                        Exercise 2 Correction
+                    </a>
+                    <a href="correction3.html" class="btn-correction">
+                        <span class="correction-icon">📋</span>
+                        Exercise 3 Correction
+                    </a>
+                    <a href="correction4.html" class="btn-correction">
+                        <span class="correction-icon">📋</span>
+                        Exercise 4 Correction
+                    </a>
+                </div>
+            </div>
             <!-- </CHANGE> -->
         </main>
     </div>
 
     <!-- Added JavaScript to save group ID to sessionStorage -->
     <script>
-        function saveGroupId() {
-            const groupId = document.getElementById('groupId').value.trim();
-            if (!groupId) {
-                alert('Please enter your Group ID before starting an exercise.');
-                event.preventDefault();
-                return false;
-            }
-            sessionStorage.setItem('groupId', groupId);
-            return true;
-        }
 
-        // Load group ID if it exists
         window.addEventListener('DOMContentLoaded', () => {
-            const savedGroupId = sessionStorage.getItem('groupId');
-            if (savedGroupId) {
-                document.getElementById('groupId').value = savedGroupId;
+            const teamName = sessionStorage.getItem('teamName');
+            const condition = sessionStorage.getItem('condition');
+
+            if (!teamName || !condition) {
+                window.location.href = 'start.html';
+                return;
             }
+
+            document.getElementById('teamDisplay').textContent = teamName;
+            document.getElementById('conditionDisplay').textContent = condition === 'H' ? 'Condition H (High)' : 'Condition L (Low)';
         });
+
+        // function saveGroupId() {
+        //     const groupId = document.getElementById('groupId').value.trim();
+        //     if (!groupId) {
+        //         alert('Please enter your Group ID before starting an exercise.');
+        //         event.preventDefault();
+        //         return false;
+        //     }
+        //     sessionStorage.setItem('groupId', groupId);
+        //     return true;
+        // }
+        //
+        // // Load group ID if it exists
+        // window.addEventListener('DOMContentLoaded', () => {
+        //     const savedGroupId = sessionStorage.getItem('groupId');
+        //     if (savedGroupId) {
+        //         document.getElementById('groupId').value = savedGroupId;
+        //     }
+        // });
     </script>
-    <!-- </CHANGE> -->
 </body>
 </html>

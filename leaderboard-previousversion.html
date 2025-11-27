@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Leaderboard - Educational Quiz</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Experiment Leaderboard</title>
   <style>
     :root{
       --bg:#1b0330;--panel:#2b0b45;--accent:#ff8a00;--accent-2:#7c3aed;--text:#fff;
@@ -12,24 +11,32 @@
     body{margin:0;font-family:Inter, sans-serif;background:linear-gradient(180deg,var(--bg),#240229 120%);color:var(--text);overflow:hidden}
     .screen{display:none}
     .active{display:block}
+    /* Reduced padding and made container fit viewport height */
     .app{max-width:100%;height:100vh;margin:0 auto;padding:16px;border-radius:0;background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06));box-shadow:0 10px 30px rgba(11,7,23,0.6);display:flex;flex-direction:column}
     header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
     h1{margin:0;font-size:20px}
     .subtitle{color:rgba(255,255,255,0.65);font-size:12px}
     button{background:linear-gradient(90deg,var(--accent-2),var(--accent));border:none;color:#12010b;padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
     button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text)}
+    /* Adjusted layout to use more horizontal space and removed sidebar */
     .layout{display:grid;grid-template-columns:1fr 220px;gap:12px;flex:1;overflow:hidden}
-    .leaderboard{background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;width:80%;margin-left:15%; position: relative;overflow:auto;column-count:1;column-gap:12px}
+    /* Made leaderboard use CSS columns for 2-column layout and removed min-height */
+    .leaderboard{background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;width :80%;margin-left : 15%; position: relative;overflow:auto;column-count:1;column-gap:12px}
+    /* Reduced padding, margins, and font size for compact display */
     .team-row{display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:6px;margin-bottom:3px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:13px;break-inside:avoid}
+    /* Made rank circles smaller */
     .rank-circle{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:12px;flex-shrink:0}
     .team-name{flex:1;text-align:left;padding-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .movement{width:20px;text-align:center;font-size:13px;color:rgba(255,255,255,0.85);flex-shrink:0}
-    .highlight{background:linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37));box-shadow:0 6px 18px rgba(124, 58, 237, 0.23)}
+    .highlight{background:linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37));box-shadow:0 6px 18px rgba(124, 58, 237, 0.23)
+    }
+    /* Made sidebar more compact */
     .sidebar{padding:8px;background:rgba(255,255,255,0.03);border-radius:12px;overflow:auto;display:flex;flex-direction:column}
     .sidebar h3{font-size:14px;margin:0 0 6px 0}
     .rankings-nav button{margin:4px 0;display:block;width:100%;font-size:12px;padding:5px 8px}
     .params{cursor:pointer;margin-left:8px}
     .muted{color:rgba(255,255,255,0.6);font-size:12px}
+    /* Adjusted controls to be more compact */
     .controls{margin:8px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
     .controls input{padding:6px;border-radius:8px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);font-size:13px}
     .mini-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
@@ -38,50 +45,9 @@
     .mini-board .team-row{padding:6px 8px;font-size:13px;margin-bottom:4px}
     .mini-board .rank-circle{width:24px;height:24px;font-size:12px}
     #allTeams{font-size:11px;line-height:1.6;max-height:200px;overflow:auto}
-    .container { max-width: 100%; height: 100vh; margin: 0 auto; padding: 16px; border-radius: 0; background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06)); box-shadow: 0 10px 30px rgba(11,7,23,0.6); display: flex; flex-direction: column; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .main-content { display: flex; flex-direction: column; }
-    .info-banner { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 12px; margin-bottom: 12px; }
-    .leaderboard-card { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 12px; }
-    .leaderboard-list { overflow: auto; }
-    .ranking-table { display: flex; flex-direction: column; }
-    .ranking-row { display: flex; align-items: center; gap: 8px; padding: 6px; }
-    .current-team { background: linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37)); box-shadow: 0 6px 18px rgba(124, 58, 237, 0.23); }
-    .rank-number { font-weight: bold; }
-    .team-badge { margin-left: auto; }
-    .navigation-buttons { margin-top: 12px; }
-    .home-btn { color: var(--accent); text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header class="header">
-      <h1>Classement Général</h1>
-      <p class="subtitle">Résultats de votre montage optique (70%) et du quizz (30%) </p>
-    </header>
-
-    <main class="main-content">
-      <!-- Display current team, condition and exercise information -->
-      <div class="info-banner">
-        <p><strong>Votre équipe:</strong> <span id="teamDisplay">--</span></p>
-<!--        <p><strong>Condition:</strong> <span id="conditionDisplay">&#45;&#45;</span></p>-->
-        <p><strong>Exercice actuel:</strong> <span id="exerciseDisplay">0</span> sur 4</p>
-      </div>
-
-      <div class="leaderboard-card">
-        <h2>Classement Exercise <span id="currentExerciseNum">1</span></h2>
-        <!-- Display ranking list with current team highlighted -->
-        <div id="leaderboardList" class="leaderboard-list">
-          <p style="text-align: center; color: #c7d2fe;">Classement disponible après un exercice</p>
-        </div>
-      </div>
-
-      <div class="navigation-buttons">
-        <a href="index.html" class="home-btn">← Retour à la page principale</a>
-      </div>
-    </main>
-  </div>
-
   <!-- Screen 1: Experimenter -->
   <div id="screen1" class="screen active">
     <div class="app">
@@ -150,14 +116,16 @@
   function rand(min,max){return Math.random()*(max-min)+min}
   function randi(min,max){return Math.floor(rand(min,max+1))}
 
-  const randomNames=["Les Louves Saphir","Les Abeilles Ambrées","Les Biches Lavande","Les Guépards Ambre","Les Serpentes d'Obsidienne","Les Panthères Aigue-marine","Les Corneilles Prunes","Les Renards Dorés","Les Aiglonnes Neige","Les Loutres d'Argile","Les Fauves Opalins","Les Hirondelles Céruléennes","Les Lynx Pourpres","Les Dauphines de Topaze","Les Pingouins Obsidien","Les Cerfs de Cristal","Les Lynx Sauge","Les Paons Saphirés"];
+  const randomNames=["Les Louves Saphir","Les Abeilles Ambrées","Les Biches Lavande","Les Guépards Ambre","Les Serpentes d’Obsidienne","Les Panthères Aigue-marine","Les Corneilles Prunes","Les Renards Dorés","Les Aiglonnes Neige","Les Loutres d’Argile","Les Fauves Opalins","Les Hirondelles Céruléennes","Les Lynx Pourpres","Les Dauphines de Topaze","Les Pingouins Obsidien","Les Cerfs de Cristal","Les Lynx Sauge","Les Paons Saphirés"];
 
   const MAX_TEAMS=12, ROUNDS=4;
+  //const forcedRanks={ H:[5,3,6,2], L:[19,24,17,22] };
   const forcedRanks={ H:[4,2,3,1], L:[11,9,12,10] };
 
+
   let teams=[], condition='H', round=0, userTeamId=null, history={};
-  let leaderboardVisible=false;
-  let lastPositions = {};
+  let leaderboardVisible=false; 
+  let lastPositions = {}; 
 
   const s1=document.getElementById('screen1');
   const s2=document.getElementById('screen2');
@@ -174,17 +142,25 @@
   const backBtn=document.getElementById('backBtn');
   const miniBoards=document.getElementById('miniBoards');
 
+  // function seedTeams(){
+  //   teams=[];
+  //   for(let i=0;i<MAX_TEAMS;i++){
+  //     const name=randomNames[Math.floor(Math.random()*randomNames.length)] ;
+  //     teams.push({id:makeId(), name, score: randi(900,1400)});
+  //   }
+  // }
+
   function seedTeams() {
     teams = [];
-    const availableNames = [...randomNames];
+    const availableNames = [...randomNames]; // copie de la liste
 
     for (let i = 0; i < MAX_TEAMS; i++) {
       if (availableNames.length === 0) {
-        throw new Error("Not enough names to generate all teams!");
+        throw new Error("Pas assez de noms pour générer toutes les équipes !");
       }
 
       const index = Math.floor(Math.random() * availableNames.length);
-      const name = availableNames.splice(index, 1)[0];
+      const name = availableNames.splice(index, 1)[0]; // retire le nom
 
       teams.push({
         id: makeId(),
@@ -193,6 +169,7 @@
       });
     }
   }
+
 
   function sortedCopy(arr){ return [...arr].sort((a,b)=>b.score - a.score || a.name.localeCompare(b.name)); }
 
@@ -220,16 +197,19 @@
   function applyRanking(){
     if(round >= ROUNDS) return;
 
+    // shift scores randomly for all teams
     teams.forEach(t=>{ t.score += randi(-40,40); });
     let newSorted = sortedCopy(teams);
 
+    // Force user team to exact ranks
     if(userTeamId){
-      const forcedRank = forcedRanks[condition][round]-1;
+      const forcedRank = forcedRanks[condition][round]-1; // 0-based
       const withoutUser = newSorted.filter(x=>x.id!==userTeamId);
       withoutUser.splice(forcedRank,0,teams.find(x=>x.id===userTeamId));
       newSorted = withoutUser;
     }
 
+    // Update team scores to preserve order
     newSorted.forEach((t,i)=>{ t.score = 2000 - i*10; });
 
     round++;
@@ -240,11 +220,6 @@
     if(round === 1) rankBtn.disabled = true;
     if(round > 0) nextBtn.disabled = false;
     if(round >= ROUNDS) nextBtn.disabled = true;
-
-    // Update session storage
-    sessionStorage.setItem('teamName', document.getElementById('teamDisplay').textContent);
-    sessionStorage.setItem('condition', condition);
-    sessionStorage.setItem('leaderboardData', JSON.stringify({ currentExercise: round, currentRank: userTeamId ? newSorted.findIndex(t => t.id === userTeamId) + 1 : '--', totalTeams: teams.length }));
   }
 
   document.getElementById('startBtn').onclick = ()=>{
@@ -317,80 +292,6 @@
   backBtn.onclick = ()=>{ s3.classList.remove('active'); s2.classList.add('active'); };
 
   seedTeams(); renderSidebar();
-
-  window.addEventListener('DOMContentLoaded', function() {
-    const teamName = sessionStorage.getItem('teamName') || 'Équipe inconnue';
-    const condition = sessionStorage.getItem('condition') || 'H';
-    const leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData') || '{}');
-
-    const currentExercise = leaderboardData.currentExercise || 0;
-    const currentRank = leaderboardData.currentRank || null;
-    const totalTeams = leaderboardData.totalTeams || 13;
-
-    // Update header information
-    document.getElementById('teamDisplay').textContent = teamName;
-    // document.getElementById('conditionDisplay').textContent = condition === 'H' ? 'Condition H (High)' : 'Condition L (Low)';
-    document.getElementById('exerciseDisplay').textContent = currentExercise;
-    document.getElementById('currentExerciseNum').textContent = currentExercise;
-
-    const leaderboardList = document.getElementById('leaderboardList');
-
-    if (currentExercise > 0 && currentRank) {
-        leaderboardList.innerHTML = '';
-
-        // Team names for the ranking
-        const teamNames = [
-            'Les Louves',
-            'Les Abeilles',
-            'Les Biches',
-            'Les Guépards',
-            'Les Serpents',
-            'Les Panthères ',
-            'Les Corneilles',
-            'Les Renards ',
-            'Les Aigles',
-            'Les Loutres',
-            'Les Fauves',
-            'Les Hirondelles',
-            'Les Lynx'
-        ];
-
-        const rankTable = document.createElement('div');
-        rankTable.className = 'ranking-table';
-
-        for (let i = 1; i <= totalTeams; i++) {
-            const row = document.createElement('div');
-            row.className = 'ranking-row';
-
-            // Highlight current team
-            if (i === currentRank) {
-                row.classList.add('current-team');
-            }
-
-            // Add medal for top 3
-            let badge = '';
-            if (i === 1) badge = '🥇';
-            else if (i === 2) badge = '🥈';
-            else if (i === 3) badge = '🥉';
-
-            // Display team name
-            let displayName = teamNames[(i - 1) % teamNames.length];
-            if (i === currentRank) {
-                displayName = '<strong>' + teamName + '</strong>';
-            }
-
-            row.innerHTML = `
-                <span class="rank-number">${i}</span>
-                <span class="team-badge">${badge}</span>
-                <span class="team-name">${displayName}</span>
-            `;
-
-            rankTable.appendChild(row);
-        }
-
-        leaderboardList.appendChild(rankTable);
-    }
-  });
 })();
 </script>
 </body>

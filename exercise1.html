@@ -75,13 +75,13 @@
                     </div>
                 </div>
 
-                 <!-- Question 2: Open Text -->
+                 <!-- Question 3 -->
                 <div class="question-card">
                     <div class="question-header">
                         <span class="question-number">Question 3</span>
                         <span class="question-type">Multiple Choice</span>
                     </div>
-                    <h3 class="question-text">La lame semi-réfléchissante d’un Michelson doit être placée :</h3>
+                    <h3 class="question-text">La lame semi-réfléchissante d'un Michelson doit être placée :</h3>
 
                     <div class="options">
                         <label class="option">
@@ -141,13 +141,12 @@
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Get group ID from sessionStorage
-            const groupId = sessionStorage.getItem('groupId') || 'unknown';
+            const teamName = sessionStorage.getItem('teamName') || 'unknown';
+            const condition = sessionStorage.getItem('condition') || 'H';
             
-            // Store answers in sessionStorage
             const formData = new FormData(this);
             const answers = {
-                groupId: groupId,
+                teamName: teamName,
                 exercise: 1,
                 timestamp: new Date().toISOString(),
                 q1: formData.get('q1'),
@@ -157,22 +156,30 @@
             };
 
             sessionStorage.setItem('exercise1Answers', JSON.stringify(answers));
+            
+            const forcedRanks = { H: [4,2,3,1], L: [11,9,12,10] };
+            const currentExercise = 1;
+            const teamRank = forcedRanks[condition][currentExercise - 1];
+            
+            let leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData') || '{}');
+            leaderboardData.currentRank = teamRank;
+            leaderboardData.currentExercise = currentExercise;
+            leaderboardData.totalTeams = condition === 'H' ? 13 : 13;
+            
+            sessionStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
 
-            // Download JSON file locally
             const jsonString = JSON.stringify(answers, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${groupId}-exercise1Answers.json`;
+            a.download = `${teamName}-exercise1Answers.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            // Redirect to correction page
-            window.location.href = 'correction1.html';
-
+            window.location.href = 'result.html?exercise=1';
         });
     </script>
 </body>

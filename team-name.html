@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Team Name - Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Course Assessment Quiz</h1>
+            <p class="subtitle">Step 2 - Enter your team name</p>
+        </header>
+
+        <main class="main-content">
+            <div class="team-name-card">
+                <h2>Enter Your Team Name</h2>
+                <p>This name will appear in the leaderboard</p>
+                
+                <form onsubmit="saveTeamName(event)">
+                    <input 
+                        type="text" 
+                        id="teamName" 
+                        class="team-input" 
+                        placeholder="e.g., Les Louves Saphir"
+                        required
+                    >
+                    <button type="submit" class="btn-submit">Start Quiz →</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function saveTeamName(e) {
+            e.preventDefault();
+            const teamName = document.getElementById('teamName').value.trim();
+            if (teamName) {
+                sessionStorage.setItem('teamName', teamName);
+                window.location.href = 'index.html';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = sessionStorage.getItem('teamName');
+            if (saved) {
+                document.getElementById('teamName').value = saved;
+            }
+        });
+    </script>
+</body>
+</html>
