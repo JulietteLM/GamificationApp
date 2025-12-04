@@ -1,342 +1,417 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>Leaderboard - Educational Quiz</title>
-  <link rel="stylesheet" href="styles.css">
+  <link href="styles.css" rel="stylesheet">
   <style>
-    :root{
-      --bg:#1b0330;--panel:#2b0b45;--accent:#ff8a00;--accent-2:#7c3aed;--text:#fff;
-    }
-    body{margin:0;font-family:Inter, sans-serif;background:linear-gradient(180deg,var(--bg),#240229 120%);color:var(--text);overflow:hidden}
-    .screen{display:none}
-    .active{display:block}
-    .app{max-width:100%;height:100vh;margin:0 auto;padding:16px;border-radius:0;background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06));box-shadow:0 10px 30px rgba(11,7,23,0.6);display:flex;flex-direction:column}
-    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    h1{margin:0;font-size:20px}
-    .subtitle{color:rgba(255,255,255,0.65);font-size:12px}
-    button{background:linear-gradient(90deg,var(--accent-2),var(--accent));border:none;color:#12010b;padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
-    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text)}
-    .layout{display:grid;grid-template-columns:1fr 220px;gap:12px;flex:1;overflow:hidden}
-    .leaderboard{background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;width:80%;margin-left:15%; position: relative;overflow:auto;column-count:1;column-gap:12px}
-    .team-row{display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:6px;margin-bottom:3px;background:rgba(255,255,255,0.05);transition:transform 0.6s cubic-bezier(.2,.9,.2,1), background 0.6s ease;font-size:13px;break-inside:avoid}
-    .rank-circle{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:12px;flex-shrink:0}
-    .team-name{flex:1;text-align:left;padding-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .movement{width:20px;text-align:center;font-size:13px;color:rgba(255,255,255,0.85);flex-shrink:0}
-    .highlight{background:linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37));box-shadow:0 6px 18px rgba(124, 58, 237, 0.23)}
-    .sidebar{padding:8px;background:rgba(255,255,255,0.03);border-radius:12px;overflow:auto;display:flex;flex-direction:column}
-    .sidebar h3{font-size:14px;margin:0 0 6px 0}
-    .rankings-nav button{margin:4px 0;display:block;width:100%;font-size:12px;padding:5px 8px}
-    .params{cursor:pointer;margin-left:8px}
-    .muted{color:rgba(255,255,255,0.6);font-size:12px}
-    .controls{margin:8px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-    .controls input{padding:6px;border-radius:8px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);font-size:13px}
-    .mini-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
-    .mini-board{background:rgba(255,255,255,0.05);padding:10px;border-radius:10px}
-    .mini-board h4{text-align:center;margin:0 0 8px 0}
-    .mini-board .team-row{padding:6px 8px;font-size:13px;margin-bottom:4px}
-    .mini-board .rank-circle{width:24px;height:24px;font-size:12px}
-    #allTeams{font-size:11px;line-height:1.6;max-height:200px;overflow:auto}
-    .container { max-width: 100%; height: 100vh; margin: 0 auto; padding: 16px; border-radius: 0; background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,138,0,0.06)); box-shadow: 0 10px 30px rgba(11,7,23,0.6); display: flex; flex-direction: column; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .main-content { display: flex; flex-direction: column; }
-    .info-banner { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 12px; margin-bottom: 12px; }
-    .leaderboard-card { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 12px; }
-    .leaderboard-list { overflow: auto; }
-    .ranking-table { display: flex; flex-direction: column; }
-    .ranking-row { display: flex; align-items: center; gap: 8px; padding: 6px; }
-    .current-team { background: linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37)); box-shadow: 0 6px 18px rgba(124, 58, 237, 0.23); }
-    .rank-number { font-weight: bold; }
-    .team-badge { margin-left: auto; }
-    .navigation-buttons { margin-top: 12px; }
-    .home-btn { color: var(--accent); text-decoration: none; }
+      :root {
+          --bg: #1b0330;
+          --panel: #2b0b45;
+          --accent: #ff8a00;
+          --accent-2: #7c3aed;
+          --text: #fff;
+      }
+
+      body {
+          margin: 0;
+          font-family: Inter, sans-serif;
+          background: linear-gradient(180deg, var(--bg), #240229 120%);
+          color: var(--text);
+          overflow: hidden
+      }
+
+      .screen {
+          display: none
+      }
+
+      .active {
+          display: block
+      }
+
+      .app {
+          max-width: 100%;
+          height: 100vh;
+          margin: 0 auto;
+          padding: 16px;
+          border-radius: 0;
+          background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(255, 138, 0, 0.06));
+          box-shadow: 0 10px 30px rgba(11, 7, 23, 0.6);
+          display: flex;
+          flex-direction: column
+      }
+
+      header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px
+      }
+
+      h1 {
+          margin: 0;
+          font-size: 20px
+      }
+
+      .subtitle {
+          color: rgba(255, 255, 255, 0.65);
+          font-size: 12px
+      }
+
+      button {
+          background: linear-gradient(90deg, var(--accent-2), var(--accent));
+          border: none;
+          color: #12010b;
+          padding: 6px 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 13px
+      }
+
+      button.ghost {
+          background: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: var(--text)
+      }
+
+      .layout {
+          display: grid;
+          grid-template-columns:1fr 220px;
+          gap: 12px;
+          flex: 1;
+          overflow: hidden
+      }
+
+      .leaderboard {
+          background: rgba(255, 255, 255, 0.05);
+          padding: 8px;
+          border-radius: 12px;
+          width: 80%;
+          margin-left: 15%;
+          position: relative;
+          overflow: auto;
+          column-count: 1;
+          column-gap: 12px
+      }
+
+      .team-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 6px;
+          border-radius: 6px;
+          margin-bottom: 3px;
+          background: rgba(255, 255, 255, 0.05);
+          transition: transform 0.6s cubic-bezier(.2, .9, .2, 1), background 0.6s ease;
+          font-size: 13px;
+          break-inside: avoid
+      }
+
+      .rank-circle {
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.06));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          color: var(--text);
+          border: 1px solid rgba(255, 255, 255, 0.04);
+          font-size: 12px;
+          flex-shrink: 0
+      }
+
+      .team-name {
+          flex: 1;
+          text-align: left;
+          padding-left: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis
+      }
+
+      .movement {
+          width: 20px;
+          text-align: center;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.85);
+          flex-shrink: 0
+      }
+
+      .highlight {
+          background: linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37));
+          box-shadow: 0 6px 18px rgba(124, 58, 237, 0.23)
+      }
+
+      .sidebar {
+          padding: 8px;
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 12px;
+          overflow: auto;
+          display: flex;
+          flex-direction: column
+      }
+
+      .sidebar h3 {
+          font-size: 14px;
+          margin: 0 0 6px 0
+      }
+
+      .rankings-nav button {
+          margin: 4px 0;
+          display: block;
+          width: 100%;
+          font-size: 12px;
+          padding: 5px 8px
+      }
+
+      .params {
+          cursor: pointer;
+          margin-left: 8px
+      }
+
+      .muted {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 12px
+      }
+
+      .controls {
+          margin: 8px 0;
+          display: flex;
+          gap: 6px;
+          align-items: center;
+          flex-wrap: wrap
+      }
+
+      .controls input {
+          padding: 6px;
+          border-radius: 8px;
+          background: transparent;
+          color: var(--text);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          font-size: 13px
+      }
+
+      .mini-boards {
+          display: grid;
+          grid-template-columns:repeat(4, 1fr);
+          gap: 18px;
+          margin-top: 20px
+      }
+
+      .mini-board {
+          background: rgba(255, 255, 255, 0.05);
+          padding: 10px;
+          border-radius: 10px
+      }
+
+      .mini-board h4 {
+          text-align: center;
+          margin: 0 0 8px 0
+      }
+
+      .mini-board .team-row {
+          padding: 6px 8px;
+          font-size: 13px;
+          margin-bottom: 4px
+      }
+
+      .mini-board .rank-circle {
+          width: 24px;
+          height: 24px;
+          font-size: 12px
+      }
+
+      #allTeams {
+          font-size: 11px;
+          line-height: 1.6;
+          max-height: 200px;
+          overflow: auto
+      }
+
+      .container {
+          max-width: 100%;
+          height: 100vh;
+          margin: 0 auto;
+          padding: 16px;
+          border-radius: 0;
+          background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(255, 138, 0, 0.06));
+          box-shadow: 0 10px 30px rgba(11, 7, 23, 0.6);
+          display: flex;
+          flex-direction: column;
+      }
+
+      .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
+      }
+
+      .main-content {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .info-banner {
+          background: rgba(255, 255, 255, 0.05);
+          padding: 8px;
+          border-radius: 12px;
+          margin-bottom: 12px;
+      }
+
+      .leaderboard-card {
+          background: rgba(255, 255, 255, 0.05);
+          padding: 8px;
+          border-radius: 12px;
+      }
+
+      .leaderboard-list {
+          overflow: auto;
+      }
+
+      .ranking-table {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .ranking-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px;
+      }
+
+      .current-team {
+          background: linear-gradient(90deg, rgba(255, 138, 0, 0.25), rgba(124, 58, 237, 0.37));
+          box-shadow: 0 6px 18px rgba(124, 58, 237, 0.23);
+      }
+
+      .rank-number {
+          font-weight: bold;
+      }
+
+      .team-badge {
+          margin-left: auto;
+      }
+
+      .navigation-buttons {
+          margin-top: 12px;
+      }
+
+      .home-btn {
+          color: var(--accent);
+          text-decoration: none;
+      }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header class="header">
-      <h1>Classement Général</h1>
-      <p class="subtitle">Résultats de votre montage optique (70%) et du quizz (30%) </p>
+<div class="container">
+  <header class="header">
+    <h1>Classement Général</h1>
+    <p class="subtitle">Résultats de votre montage optique (70%) et du quizz (30%) </p>
+  </header>
+
+  <main class="main-content">
+    <!-- Display current team, condition and exercise information -->
+    <div class="info-banner">
+      <p><strong>Votre équipe:</strong> <span id="teamDisplay">--</span></p>
+      <!--        <p><strong>Condition:</strong> <span id="conditionDisplay">&#45;&#45;</span></p>-->
+      <p><strong>Exercice actuel:</strong> <span id="exerciseDisplay">0</span> sur 4</p>
+    </div>
+
+    <div class="leaderboard-card">
+      <h2>Classement Exercise <span id="currentExerciseNum">1</span></h2>
+      <!-- Display ranking list with current team highlighted -->
+      <div class="leaderboard-list" id="leaderboardList">
+        <p style="text-align: center; color: #c7d2fe;">Classement disponible après un exercice</p>
+      </div>
+    </div>
+
+    <div class="navigation-buttons">
+      <a class="home-btn" href="index.html">← Retour à la page principale</a>
+    </div>
+  </main>
+</div>
+
+<!-- Screen 1: Experimenter -->
+<div class="screen active" id="screen1">
+  <div class="app">
+    <h1>Experiment Setup</h1>
+    <p>Select condition:</p>
+    <label><input checked name="cond" type="radio" value="H"> (H)</label>
+    <label><input name="cond" type="radio" value="L"> (L)</label>
+    <br><br>
+    <button id="startBtn">Start Experiment</button>
+  </div>
+</div>
+
+<!-- Screen 2: Leaderboard -->
+<div class="screen" id="screen2">
+  <div class="app">
+    <header>
+      <div>
+        <h1>Leaderboard <span class="params" id="paramIcon">⚙️</span></h1>
+        <div class="subtitle"> • 4 exercises</div>
+      </div>
+      <button class="ghost" id="showAllBtn">Show all ranks</button>
     </header>
 
-    <main class="main-content">
-      <!-- Display current team, condition and exercise information -->
-      <div class="info-banner">
-        <p><strong>Votre équipe:</strong> <span id="teamDisplay">--</span></p>
-<!--        <p><strong>Condition:</strong> <span id="conditionDisplay">&#45;&#45;</span></p>-->
-        <p><strong>Exercice actuel:</strong> <span id="exerciseDisplay">0</span> sur 4</p>
-      </div>
+    <div class="controls">
+      <input id="teamName" placeholder="Enter new team name" type="text">
+      <button id="addBtn">Add team</button>
+      <button id="rankBtn">First rank</button>
+      <button class="ghost" id="nextBtn">Next rank</button>
+      <div class="muted" style="margin-left:auto">Round: <span id="roundDisplay">0</span>/4</div>
+    </div>
 
-      <div class="leaderboard-card">
-        <h2>Classement Exercise <span id="currentExerciseNum">1</span></h2>
-        <!-- Display ranking list with current team highlighted -->
-        <div id="leaderboardList" class="leaderboard-list">
-          <p style="text-align: center; color: #c7d2fe;">Classement disponible après un exercice</p>
+    <div class="layout">
+      <section class="leaderboard" id="list"></section>
+      <aside class="sidebar">
+        <h3>All Teams</h3>
+        <div id="allTeams"></div>
+        <h3 style="margin-top:12px">Past Rankings</h3>
+        <div class="rankings-nav">
+          <button data-round="1">See 1st exercise</button>
+          <button data-round="2">See 2nd exercise</button>
+          <button data-round="3">See 3rd exercise</button>
+          <button data-round="4">See 4th exercise</button>
         </div>
-      </div>
-
-      <div class="navigation-buttons">
-        <a href="index.html" class="home-btn">← Retour à la page principale</a>
-      </div>
-    </main>
-  </div>
-
-  <!-- Screen 1: Experimenter -->
-  <div id="screen1" class="screen active">
-    <div class="app">
-      <h1>Experiment Setup</h1>
-      <p>Select condition:</p>
-      <label><input type="radio" name="cond" value="H" checked> (H)</label>
-      <label><input type="radio" name="cond" value="L"> (L)</label>
-      <br><br>
-      <button id="startBtn">Start Experiment</button>
+      </aside>
     </div>
   </div>
+</div>
 
-  <!-- Screen 2: Leaderboard -->
-  <div id="screen2" class="screen">
-    <div class="app">
-      <header>
-        <div>
-          <h1>Leaderboard <span id="paramIcon" class="params">⚙️</span></h1>
-          <div class="subtitle"> • 4 exercises </div>
-        </div>
-        <button id="showAllBtn" class="ghost">Show all ranks</button>
-      </header>
-
-      <div class="controls">
-        <input id="teamName" type="text" placeholder="Enter new team name">
-        <button id="addBtn">Add team</button>
-        <button id="rankBtn">First rank</button>
-        <button id="nextBtn" class="ghost">Next rank</button>
-        <div style="margin-left:auto" class="muted">Round: <span id="roundDisplay">0</span>/4</div>
+<!-- Screen 3: All Ranks -->
+<div class="screen" id="screen3">
+  <div class="app">
+    <header>
+      <div>
+        <h1>All Rankings</h1>
+        <div class="subtitle">Overview of all 4 exercises</div>
       </div>
-
-      <div class="layout">
-        <section class="leaderboard" id="list"></section>
-        <aside class="sidebar">
-          <h3>All Teams</h3>
-          <div id="allTeams"></div>
-          <h3 style="margin-top:12px">Past Rankings</h3>
-          <div class="rankings-nav">
-            <button data-round="1">See 1st exercise</button>
-            <button data-round="2">See 2nd exercise</button>
-            <button data-round="3">See 3rd exercise</button>
-            <button data-round="4">See 4th exercise</button>
-          </div>
-        </aside>
-      </div>
-    </div>
+      <button class="ghost" id="backBtn">⬅ Back</button>
+    </header>
+    <div class="mini-boards" id="miniBoards"></div>
   </div>
-
-  <!-- Screen 3: All Ranks -->
-  <div id="screen3" class="screen">
-    <div class="app">
-      <header>
-        <div>
-          <h1>All Rankings</h1>
-          <div class="subtitle">Overview of all 4 exercises</div>
-        </div>
-        <button id="backBtn" class="ghost">⬅ Back</button>
-      </header>
-      <div id="miniBoards" class="mini-boards"></div>
-    </div>
-  </div>
+</div>
 
 <script>
-(function(){
-  function makeId(){return 't'+Math.random().toString(36).slice(2,9)}
-  function rand(min,max){return Math.random()*(max-min)+min}
-  function randi(min,max){return Math.floor(rand(min,max+1))}
+    (function () {
+        function makeId() {
+            return 't' + Math.random().toString(36).slice(2, 9)
+        }
 
-  const randomNames=["Les Louves Saphir","Les Abeilles Ambrées","Les Biches Lavande","Les Guépards Ambre","Les Serpentes d'Obsidienne","Les Panthères Aigue-marine","Les Corneilles Prunes","Les Renards Dorés","Les Aiglonnes Neige","Les Loutres d'Argile","Les Fauves Opalins","Les Hirondelles Céruléennes","Les Lynx Pourpres","Les Dauphines de Topaze","Les Pingouins Obsidien","Les Cerfs de Cristal","Les Lynx Sauge","Les Paons Saphirés"];
+        function rand(min, max) {
+            return Math.random() * (max - min) + min
+        }
 
-  const MAX_TEAMS=12, ROUNDS=4;
-  const forcedRanks={ H:[4,2,3,1], L:[11,9,12,10] };
-
-  let teams=[], condition='H', round=0, userTeamId=null, history={};
-  let leaderboardVisible=false;
-  let lastPositions = {};
-
-  const s1=document.getElementById('screen1');
-  const s2=document.getElementById('screen2');
-  const s3=document.getElementById('screen3');
-  const list=document.getElementById('list');
-  const allTeamsEl=document.getElementById('allTeams');
-  const teamInput=document.getElementById('teamName');
-  const addBtn=document.getElementById('addBtn');
-  const rankBtn=document.getElementById('rankBtn');
-  const nextBtn=document.getElementById('nextBtn');
-  const paramIcon=document.getElementById('paramIcon');
-  const roundDisplay=document.getElementById('roundDisplay');
-  const showAllBtn=document.getElementById('showAllBtn');
-  const backBtn=document.getElementById('backBtn');
-  const miniBoards=document.getElementById('miniBoards');
-
-  function seedTeams() {
-    teams = [];
-    const availableNames = [...randomNames];
-
-    for (let i = 0; i < MAX_TEAMS; i++) {
-      if (availableNames.length === 0) {
-        throw new Error("Not enough names to generate all teams!");
-      }
-
-      const index = Math.floor(Math.random() * availableNames.length);
-      const name = availableNames.splice(index, 1)[0];
-
-      teams.push({
-        id: makeId(),
-        name,
-        score: randi(900, 1400)
-      });
-    }
-  }
-
-  function sortedCopy(arr){ return [...arr].sort((a,b)=>b.score - a.score || a.name.localeCompare(b.name)); }
-
-  function renderBoard(showRound=null){
-    const prevRects = {}; Array.from(list.children).forEach(node=>{ prevRects[node.dataset.id] = node.getBoundingClientRect(); });
-    list.innerHTML = '';
-    if(!leaderboardVisible && !showRound) return;
-
-    let display;
-    if(showRound && history[showRound]) display = history[showRound];
-    else display = sortedCopy(teams);
-
-    display.forEach((t,i)=>{
-      const movement = (lastPositions[t.id]!==undefined) ? (lastPositions[t.id] > i ? '▲' : (lastPositions[t.id] < i ? '▼' : '')) : '';
-      const row = document.createElement('div');
-      row.className = 'team-row' + (t.id === userTeamId ? ' highlight' : '');
-      row.dataset.id = t.id;
-      row.innerHTML = `<div class="rank-circle">${i+1}</div><div class="team-name">${t.name}</div><div class="movement">${movement}</div>`;
-      list.appendChild(row);
-    });
-
-    Array.from(list.children).forEach((node, i)=>{ lastPositions[node.dataset.id] = i; });
-  }
-
-  function applyRanking(){
-    if(round >= ROUNDS) return;
-
-    teams.forEach(t=>{ t.score += randi(-40,40); });
-    let newSorted = sortedCopy(teams);
-
-    if(userTeamId){
-      const forcedRank = forcedRanks[condition][round]-1;
-      const withoutUser = newSorted.filter(x=>x.id!==userTeamId);
-      withoutUser.splice(forcedRank,0,teams.find(x=>x.id===userTeamId));
-      newSorted = withoutUser;
-    }
-
-    newSorted.forEach((t,i)=>{ t.score = 2000 - i*10; });
-
-    round++;
-    history[round] = newSorted.map(t=>({id:t.id, name:t.name, score:t.score}));
-    leaderboardVisible = true;
-    renderBoard();
-    roundDisplay.textContent = round;
-    if(round === 1) rankBtn.disabled = true;
-    if(round > 0) nextBtn.disabled = false;
-    if(round >= ROUNDS) nextBtn.disabled = true;
-
-    // Update session storage
-    sessionStorage.setItem('teamName', document.getElementById('teamDisplay').textContent);
-    sessionStorage.setItem('condition', condition);
-    sessionStorage.setItem('leaderboardData', JSON.stringify({ currentExercise: round, currentRank: userTeamId ? newSorted.findIndex(t => t.id === userTeamId) + 1 : '--', totalTeams: teams.length }));
-  }
-
-  document.getElementById('startBtn').onclick = ()=>{
-    condition = document.querySelector('input[name=cond]:checked').value;
-    seedTeams(); renderSidebar(); renderBoard();
-    s1.classList.remove('active'); s2.classList.add('active');
-  };
-
-  function renderSidebar(){
-    allTeamsEl.innerHTML = '';
-    teams.forEach(t=>{
-      const div = document.createElement('div');
-      div.textContent = t.name + (t.id===userTeamId? ' *' : '');
-      allTeamsEl.appendChild(div);
-    });
-  }
-
-  addBtn.onclick = ()=>{
-    const name = (teamInput.value || '').trim() || (randomNames[Math.floor(Math.random()*randomNames.length)] + ' ' + randi(10,99));
-    const newTeam = { id: makeId(), name, score: 1200 };
-    teams.push(newTeam);
-    userTeamId = newTeam.id;
-    renderSidebar(); renderBoard();
-    teamInput.value = '';
-  };
-
-  rankBtn.onclick = ()=> applyRanking();
-  nextBtn.onclick = ()=> applyRanking();
-  paramIcon.onclick = ()=> alert('Condition: ' + (condition==='H' ? '(H)' : '(L)'));
-
-  document.querySelectorAll('.rankings-nav button').forEach(btn=>{
-    btn.onclick = ()=>{
-      const r = parseInt(btn.getAttribute('data-round'));
-      if(history[r]){
-        const prev = history[r-1] || null;
-        lastPositions = {};
-        if(prev){ prev.forEach((t,i)=> lastPositions[t.id] = i); }
-        list.innerHTML='';
-        history[r].forEach((t,i)=>{
-          const movement = (lastPositions[t.id]!==undefined) ? (lastPositions[t.id] > i ? '▲' : (lastPositions[t.id] < i ? '▼' : '')) : '';
-          const row = document.createElement('div');
-          row.className = 'team-row' + (t.id===userTeamId?' highlight':'');
-          row.dataset.id = t.id;
-          row.innerHTML = `<div class="rank-circle">${i+1}</div><div class="team-name">${t.name}</div><div class="movement">${movement}</div>`;
-          list.appendChild(row);
-        });
-      }
-    };
-  });
-
-  showAllBtn.onclick = ()=>{
-    miniBoards.innerHTML = '';
-    for(let r=1;r<=ROUNDS;r++){
-      const div=document.createElement('div');
-      div.className='mini-board';
-      div.innerHTML=`<h4>Exercise ${r}</h4>`;
-      if(history[r]){
-        history[r].forEach((t,i)=>{
-          const row=document.createElement('div');
-          row.className='team-row'+(t.id===userTeamId?' highlight':'');
-          row.innerHTML=`<div class=\"rank-circle\">${i+1}</div><div class=\"team-name\">${t.name}</div>`;
-          div.appendChild(row);
-        });
-      }
-      miniBoards.appendChild(div);
-    }
-    s2.classList.remove('active'); s3.classList.add('active');
-  };
-
-  backBtn.onclick = ()=>{ s3.classList.remove('active'); s2.classList.add('active'); };
-
-  seedTeams(); renderSidebar();
-
-  window.addEventListener('DOMContentLoaded', function() {
-    const teamName = sessionStorage.getItem('teamName') || 'Équipe inconnue';
-    const condition = sessionStorage.getItem('condition') || 'H';
-    const leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData') || '{}');
-
-    const currentExercise = leaderboardData.currentExercise || 0;
-    const currentRank = leaderboardData.currentRank || null;
-    const totalTeams = leaderboardData.totalTeams || 13;
-
-    // Update header information
-    document.getElementById('teamDisplay').textContent = teamName;
-    // document.getElementById('conditionDisplay').textContent = condition === 'H' ? 'Condition H (High)' : 'Condition L (Low)';
-    document.getElementById('exerciseDisplay').textContent = currentExercise;
-    document.getElementById('currentExerciseNum').textContent = currentExercise;
-
-    const leaderboardList = document.getElementById('leaderboardList');
-
-    if (currentExercise > 0 && currentRank) {
-        leaderboardList.innerHTML = '';
+        function randi(min, max) {
+            return Math.floor(rand(min, max + 1))
+        }
 
         // Team names for the ranking
         const teamNames = [
@@ -344,7 +419,6 @@
             'Les Abeilles',
             'Les Biches',
             'Les Guépards',
-            'Les Serpents',
             'Les Panthères ',
             'Les Corneilles',
             'Les Renards ',
@@ -355,43 +429,207 @@
             'Les Lynx'
         ];
 
-        const rankTable = document.createElement('div');
-        rankTable.className = 'ranking-table';
+        const ROUNDS = 4;
+        const forcedRanks = {H: [4, 2, 3, 1], L: [11, 9, 12, 10]};
 
-        for (let i = 1; i <= totalTeams; i++) {
+        let round = 0, userTeamId = null, history = {};
+        let leaderboardVisible = false;
+
+        const s1 = document.getElementById('screen1');
+        const s2 = document.getElementById('screen2');
+        const s3 = document.getElementById('screen3');
+        const list = document.getElementById('list');
+        const allTeamsEl = document.getElementById('allTeams');
+        const teamInput = document.getElementById('teamName');
+        const addBtn = document.getElementById('addBtn');
+        const rankBtn = document.getElementById('rankBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const paramIcon = document.getElementById('paramIcon');
+        const roundDisplay = document.getElementById('roundDisplay');
+        const showAllBtn = document.getElementById('showAllBtn');
+        const backBtn = document.getElementById('backBtn');
+        const miniBoards = document.getElementById('miniBoards');
+
+        // Getting saved things
+        const condition = sessionStorage.getItem('condition') || 'H';
+        const leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData') ?? '{}');
+        const teamName = sessionStorage.getItem('teamName') || 'Équipe inconnue';
+        const currentExercise = leaderboardData.currentExercise || 0;
+        const currentRank = leaderboardData.currentRank || 0;
+        const previousRank = leaderboardData.previousRank || currentRank;
+        const previousExercise = leaderboardData.previousExercise || 0;
+
+        // Update header information
+        document.getElementById('teamDisplay').textContent = teamName;
+        document.getElementById('exerciseDisplay').textContent = currentExercise;
+        document.getElementById('currentExerciseNum').textContent = currentExercise;
+
+        function saveTeams(toSave) {
+
+            const leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData'));
+
+            toSave.forEach((team, index) => {
+                team.index = index;
+            })
+
+            leaderboardData.teams = toSave;
+            leaderboardData.previousExercise = currentExercise;
+            leaderboardData.previousRank = currentRank;
+
+            sessionStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
+
+        }
+
+        function getSavedTeams() {
+            const leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData'));
+            return leaderboardData.teams ?? [];
+        }
+
+        function seedTeams(teams) {
+            if (teams.length > 0) return;
+
+            for (const teamName of teamNames) {
+                teams.push({
+                    name: teamName,
+                    score: randi(900, 1400)
+                });
+            }
+
+            teams.sort((a, b) => a.score - b.score);
+        }
+
+        function render(teams, rankingChanged, previousTeams) {
+            console.log('dom loaded');
+
+
+            const leaderboardList = document.getElementById('leaderboardList');
+
+            if (!(currentExercise > 0 && currentRank)) {
+                return;
+            }
+
+            leaderboardList.innerHTML = '';
+
+            const rankTable = document.createElement('div');
+            rankTable.className = 'ranking-table';
+            let index = 0
+            for (let team of teams) {
+                index++
+
+                const previousTeam = previousTeams.find(t => t.name === team.name);
+
+                if (index === currentRank) {
+                    const currentTeam = {
+                        name: teamName, score: currentRank, // We dont care about the score of the current team
+                        index: currentRank
+                    };
+
+                    createRow(rankTable, index, currentRank, currentTeam, {
+                        name: team.name,
+                        score: previousRank,
+                        index: previousRank
+                    });
+                    index++
+                }
+
+                createRow(rankTable, index, currentRank, team, previousTeam)
+            }
+
+            leaderboardList.appendChild(rankTable);
+        }
+
+        function getVariation(current, previous) {
+            if (!previous) {
+                return 0
+            }
+
+            return (previous.index + 1) - (current.index + 1);
+        }
+
+        function createRow(rankTable, index, currentRank, team, previous) {
+            const variation = getVariation(team, previous);
+            console.log(team.name, variation);
+
             const row = document.createElement('div');
             row.className = 'ranking-row';
 
             // Highlight current team
-            if (i === currentRank) {
+            if (index === currentRank) {
                 row.classList.add('current-team');
             }
 
             // Add medal for top 3
             let badge = '';
-            if (i === 1) badge = '🥇';
-            else if (i === 2) badge = '🥈';
-            else if (i === 3) badge = '🥉';
+            if (index === 1) badge = '🥇';
+            else if (index === 2) badge = '🥈';
+            else if (index === 3) badge = '🥉';
 
-            // Display team name
-            let displayName = teamNames[(i - 1) % teamNames.length];
-            if (i === currentRank) {
-                displayName = '<strong>' + teamName + '</strong>';
+            // Add variation arrow
+            let arrow = ''
+            if (variation > 0) {
+                arrow = '▲';
+            } else if (variation < 0 && index > 1) {
+                arrow = '▼';
             }
 
+            // Display team name
+            let displayName = team.name
+
+
             row.innerHTML = `
-                <span class="rank-number">${i}</span>
-                <span class="team-badge">${badge}</span>
-                <span class="team-name">${displayName}</span>
-            `;
+            <span class="rank-number">${index}</span>
+            <span class="team-badge">${badge}</span>
+            <span class="team-name">${displayName}</span>
+        `;
 
             rankTable.appendChild(row);
         }
 
-        leaderboardList.appendChild(rankTable);
-    }
-  });
-})();
+        function changeRankings(teams) {
+            console.log('Changing ranks')
+            teams.forEach(t => {
+                t.score += randi(-40, 40);
+            })
+
+
+            teams.sort((a, b) => a.score - b.score);
+        }
+
+        function addIndices(teams) {
+            for (let i = 0; i < teams.length; i++) {
+                const t = teams[i];
+
+                if (i >= currentRank - 1) {
+                    // Shift index by +1 for all items after the currentRank
+                    t.index = i + 2;
+                } else {
+                    t.index = i + 1;
+                }
+            }
+        }
+
+        // Main execution below, lets call things we coded !
+        const previousTeams = getSavedTeams()
+        addIndices(previousTeams);
+
+        const teams = JSON.parse(JSON.stringify(previousTeams));
+
+        console.log(previousTeams, teams);
+
+        let rankingChanged = false
+
+        if (teams.length === 0) {
+            console.log('no records found : creating a seeding');
+            seedTeams(teams)
+        } else if (previousExercise !== currentExercise) {
+            rankingChanged = true
+            changeRankings(teams);
+        }
+
+        addIndices(teams);
+        render(teams, rankingChanged, previousTeams);
+        saveTeams(teams);
+    })();
 </script>
 </body>
 </html>
