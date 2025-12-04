@@ -146,14 +146,13 @@
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Get group ID from sessionStorage
-            const groupId = sessionStorage.getItem('groupId') || 'unknown';
+           const teamName = sessionStorage.getItem('teamName') || 'unknown';
+            const condition = sessionStorage.getItem('condition') || 'H';
 
             // Store answers in sessionStorage
             const formData = new FormData(this);
             const answers = {
-                groupId: groupId,
-                exercise: 1,
+                exercise: 3,
                 timestamp: new Date().toISOString(),
                 q1: formData.get('q1'),
                 q2: formData.get('q2'),
@@ -162,21 +161,30 @@
             };
 
             sessionStorage.setItem('exercise3Answers', JSON.stringify(answers));
-
-            // Download JSON file locally
+                
+            const forcedRanks = { H: [4,2,3,1], L: [11,9,12,10] };
+            const currentExercise = 3;
+            const teamRank = forcedRanks[condition][currentExercise - 1];
+            
+            let leaderboardData = JSON.parse(sessionStorage.getItem('leaderboardData') || '{}');
+            leaderboardData.currentRank = teamRank;
+            leaderboardData.currentExercise = currentExercise;
+            leaderboardData.totalTeams = 13;
+            
+            sessionStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
+    
             const jsonString = JSON.stringify(answers, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${groupId}-exercise3Answers.json`;
+            a.download = `${teamName}-exercise3Answers.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            // Redirect to correction page
-            window.location.href = 'correction3.html';
+            window.location.href = 'result.html?exercise=3';
 
         });
     </script>
